@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="Ruimin Li">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login Page</title>
+</head>
+
+<body>
+  <form id="loginForm">
+      <h1 >User Login</h1>
+    <p>User Name: <input type="text" id="loginName" name="loginName" required [(ngModel)]="inputName" >
+      <span class="error-class" id="nameValidity">{{ nameCheck }}</span>
+    </p>
+    <p>Password: <input type="password" id="loginPassword" name="loginPassword" required [(ngModel)]="inputPassword" >
+      <span class="error-class" id="passwordValidity">{{ passwordCheck }}</span>
+    </p>
+  <button type="submit" class="btn btn-primary" id="submit-login" value="Submit" (click)="onSubmit()">Login</button>&nbsp;&nbsp;
+  <button type="reset" class="btn btn-primary" value="Reset">Clear</button>
+    <span class="error-class" id="loginFail">{{ loginFailInfo }}</span>
+  </form>
+</body>

@@ -1,0 +1,28 @@
+/* You can add global styles to this file, and also import other style files */
+.followers-box img {
+    width: 150px;
+}
+
+body {
+    background-color: lightblue;
+}
+
+#registerFrom {
+    background-color: white;
+    border: 5px solid black;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 10px 5px 5px lightgreen;
+    padding: 20px;
+}
+
+#loginForm {
+    background-color: white;
+    border: 5px solid black;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 10px 5px 5px lightgreen;
+    padding: 20px;
+}
+
+.error-class {
+    color: red;
+}
