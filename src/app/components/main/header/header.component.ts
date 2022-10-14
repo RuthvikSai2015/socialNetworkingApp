@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit {
   }
   logOut() {
     this.logOutHelper();
-    this.router.navigate(['auth']);
+    this.router.navigate(['login']);
 
   }
 

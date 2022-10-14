@@ -1,18 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 .followers-box img {
-    width: 150px;
+    width: 226px;
 }
-
-body {
-    background-color: lightblue;
+.card{
+    border: 4px solid lightblue !important;
 }
 .app-header-body{
-    background-color:lightgray !important;
+    /* background-color:lightgray !important; */
     border:4px solid rgb(174, 112, 112);
     box-shadow: 10px 5px 5px lightgreen;;
 }
 .app-post-body{
-    background-color:lightgray !important;
+    /* background-color:lightgray !important; */
     box-shadow: 10px 5px 5px lightgray;;
 }
 #registerFrom {
@@ -22,18 +21,45 @@ body {
     box-shadow: 10px 5px 5px lightgreen;
     padding: 20px;
 }
-
-#loginForm {
-    background-color: white;
-    border: 5px solid black;
-    border-radius: 10px 10px 10px 10px;
-    box-shadow: 10px 5px 5px lightgreen;
-    padding: 20px;
+.badge{
+    color:blue !important;
+    cursor: pointer;
 }
-
 .error-class {
     color: red;
+}
+.reg-body{
+    width:50%;
+    margin-left:320px;
 }
 .app-body{
     background-image: url("https://cutewallpaper.org/21/beautiful-wallpapers-download/Beautiful-Wallpapers-for-Desktop-58-images.jpg");
 }
+
+.loginText {
+    background-color: #0e6dd2;
+    border-radius: 11px 13px 0px 0px;
+  }
+  .slink {
+    text-align: right;
+    color: black;
+  }
+  .loginDivHeader {
+    opacity: 17.5;
+    /* background-color: rgba(255, 165, 0, 0.73);*/
+  }
+  .floatlabel {
+    float: left;
+  }
+  .loginAbove {
+    margin-top: 50px;
+    display: inline-block;
+    margin-left:30%;
+  }
+  .loginForm {
+    background-color: aliceblue;
+    border-radius: 2.5rem;
+    box-shadow: 2rem 3rem 11rem #aaa;
+    display: grid;
+    padding:2rem 2rem;
+  }

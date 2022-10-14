@@ -9,9 +9,9 @@
 </head>
 
 <body class="app-header-body">
-  <button type="submit" class="btn btn-primary" id="submit-logout" value="Submit" (click)="logOut()">Log Out</button>&nbsp;&nbsp;
-  <button type="submit" class="btn btn-primary" id="submit-goProfile" value="Submit" (click)="goToProfile()">Go to Profile</button><br><br>
-  <img id="userImg" src="{{ imgUrl }}" width="96%" height="50%"/>
+  <a  class="badge badge-primary"  id="submit-logout"  (click)="logOut()">Log Out</a>&nbsp;&nbsp;
+  <a  class="badge badge-primary" id="submit-goProfile"  (click)="goToProfile()">Go to Profile</a><br><br>
+  <img id="userImg" src="{{ imgUrl }}" width="96%" height="50%" alt="image has been deleted"/>
   <br><p>User Name: <span id="userName" name="userName">{{ userName }}</span>
     <br>
     <span>Status: </span>
@@ -20,5 +20,5 @@
     <button type="submit" class="btn btn-primary" id="submit-status" value="Submit" (click)="changeStatus()">Update Status</button>
 
     <br><br>
-   <th width = "50%">   <app-follower class="form"></app-follower></th> 
+   <th width = "50%"><app-follower class="form"></app-follower></th> 
 </body>

@@ -15,8 +15,8 @@ import { Observable} from "rxjs";
 export class LoginComponent implements OnInit {
   url: string
   nameCheck: any;
-  inputPassword: string | undefined;
-  inputName: any;
+  userPassword: string | undefined;
+  userName: any;
   passwordCheck: string | undefined;
   loginFailInfo: any;
   public dummyUser: any[] = [];
@@ -27,6 +27,8 @@ export class LoginComponent implements OnInit {
                   private userTransmit: UserService,
                   private postTransmit: PostService,
                   private followerService: FollowerService) {
+                    this.userName="";
+                    this.userPassword="";
       this.nameCheck = "";
       this.passwordCheck = "";
       this.url = "";  
@@ -37,20 +39,26 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    if (!this.inputName) this.nameCheck = "UserName cannot be empty";
+    if (!this.userName) {
+       this.nameCheck = "UserName cannot be empty";
+       return;
+    }
     else
       this.nameCheck = "";
-    if (!this.inputPassword) this.passwordCheck = "Password cannot be empty";
+    if (!this.userPassword) {
+      this.passwordCheck = "Password cannot be empty";
+       return;
+    }
     else
       this.passwordCheck = "";
 
     if (this.nameCheck == "" && this.passwordCheck=="") {
      var  LoginForm = {
-        "username": this.inputName,
-        "password": this.inputPassword
+        "username": this.userName,
+        "password": this.userPassword
       }
       localStorage.setItem("userLoginForm", JSON.stringify(LoginForm));
-          this.router.navigate(['main']);
+      this.router.navigate(['main']);
     
     }
     this.loginFailInfo = "The input data do not match to our user database, try again!"

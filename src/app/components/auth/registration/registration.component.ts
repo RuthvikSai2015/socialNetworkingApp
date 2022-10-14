@@ -6,8 +6,8 @@ import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-registeration',
-  templateUrl: './registeration.component.html',
-  styleUrls: ['./registeration.component.css']
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.css']
 })
 export class RegisterationComponent implements OnInit {
   url: string
@@ -17,7 +17,7 @@ export class RegisterationComponent implements OnInit {
   birthCheck: any;
   zipCheck: any;
   passwordCheck: any;
-  inputName: string | undefined;
+  userName: string | undefined;
   inputDisplayName : string | undefined
   inputEmail: string | undefined
   inputPhone: string | undefined
@@ -25,6 +25,7 @@ export class RegisterationComponent implements OnInit {
   inputZIP: string | undefined
   inputPassword: string | undefined
   inputPassword2: string | undefined
+  successMessage: string | undefined
   public dummyUser: any[] = [];
 
   constructor(private http: HttpClient,
@@ -36,6 +37,7 @@ export class RegisterationComponent implements OnInit {
     this.phoneCheck = "";
     this.passwordCheck="";
     this.url = "";   
+    this.successMessage="";
   }
 
   ngOnInit(): void {
@@ -65,17 +67,17 @@ export class RegisterationComponent implements OnInit {
     else {
       this.birthCheck = "";
     }
-    if (typeof this.inputName === "string")
-      resultName = namePattern.test(this.inputName);
+    if (typeof this.userName === "string")
+      resultName = namePattern.test(this.userName);
     if (!resultName)
       this.nameCheck = "Expect proper format is a string of upper and lower case letters and numbers begin with a letter";
 
-    if (this.inputName && resultName)
+    if (this.userName && resultName)
       this.nameCheck = "";
     if (typeof this.inputEmail === "string")
       resultEmail = emailPattern.test(this.inputEmail);
     if (!resultEmail)
-      this.emailCheck = "Expected email form should be include a @. Ex: rl88@rice.edu";
+      this.emailCheck = "Expected email form should be include a @. Ex: sn_62@rice.edu";
     if (this.inputEmail && resultEmail)
       this.emailCheck = "";
     if (typeof this.inputZIP === "string")
@@ -89,7 +91,7 @@ export class RegisterationComponent implements OnInit {
     if (typeof this.inputPhone === "string")
       resultPhone = phonePattern.test(this.inputPhone);
     if (!resultPhone)
-      this.phoneCheck = "Expected phone number format 123-123-1234";
+      this.phoneCheck = "Expected phone number format 012-012-0123";
     if (this.inputPhone && resultPhone)
       this.phoneCheck = "";
     if ((<HTMLInputElement>document.getElementById("loginPassword")).value.length == 0)
@@ -104,9 +106,9 @@ export class RegisterationComponent implements OnInit {
       this.zipCheck == "" &&
       this.phoneCheck == "" &&
       this.passwordCheck=="") {
-      var userInfoKey = "user:" + this.inputName + ":" + this.inputPassword;
+      var userInfoKey = "user:" + this.userName + ":" + this.inputPassword;
       var data = {
-        "username": this.inputName,
+        "username": this.userName,
         "displayName": this.inputDisplayName,
         "password": this.inputPassword,
         "phone": this.inputPhone,
@@ -121,7 +123,7 @@ export class RegisterationComponent implements OnInit {
       if (data.DOB == null)
         data.DOB = "0000-00-00";
       var data2 = {
-        "username": this.inputName,
+        "username": this.userName,
         "email": this.inputEmail,
         "dob": this.inputBirth,
         "zipcode": this.inputZIP,
@@ -129,7 +131,8 @@ export class RegisterationComponent implements OnInit {
         "displayName": this.inputDisplayName,
         "phone": this.inputPhone
       }
-      localStorage.setItem('userName',<string>this.inputName);
+      this.successMessage="User Added Succesfully!";
+      localStorage.setItem('userName',<string>this.userName);
       localStorage.setItem('dateOfBirth',<string>this.inputBirth);
       localStorage.setItem('phone',<string>this.inputPhone);
       localStorage.setItem('ZIP',<string>this.inputZIP);

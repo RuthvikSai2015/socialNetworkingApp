@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="Ruimin Li">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Register Page</title>
+</head>
+
+<body class="reg-body">
+  <form id="registerFrom">
+    <h1>User Registration</h1>
+    <hr>
+    <div *ngIf="successMessage" class="alert alert-success" id="successMessage"><em>{{ successMessage }}</em></div>
+    <div> <label class="floatlabel">User Name: </label><input class="form-control" type="text" id="loginName"
+        name="loginName" required [(ngModel)]="userName" placeholder="begin with letter">
+      <div *ngIf="nameCheck" class="alert alert-danger" id="nameValidity">{{ nameCheck }}</div>
+    </div>
+    <div><label class="floatlabel">Display Name:</label>
+      <input class="form-control" type="text" id="loginDisplayName" name="loginDisplayName"
+        [(ngModel)]="inputDisplayName" placeholder="optional">
+    </div>
+    <div>Email Address: <input class="form-control" type="text" id="loginEmail" name="loginEmail" required
+        [(ngModel)]="inputEmail" placeholder="***@***">
+      <div *ngIf="emailCheck" class="alert alert-danger" id="emailValidity">{{ emailCheck }}</div>
+    </div>
+    <div>Contact Number: <input class="form-control" type="text" id="loginPhone" name="loginPhone" required
+        [(ngModel)]="inputPhone" placeholder="012-012-0123">
+      <div *ngIf="phoneCheck" class="alert alert-danger" id="phoneValidity">{{ phoneCheck }}</div>
+    </div>
+    <div>Date of Birth: <input class="form-control" type="date" id="loginBirth" name="loginBirth" required
+        [(ngModel)]="inputBirth" placeholder="mm/dd/yyyy">
+      <div *ngIf="birthCheck" class="alert alert-danger" id="BirthValidity">{{ birthCheck }}</div>
+    </div>
+    <div>Zip Code: <input class="form-control" type="text" id="loginZip" name="loginZip" required [(ngModel)]="inputZIP"
+        placeholder="five digits">
+      <div *ngIf="zipCheck" class="alert alert-danger" id="ZipValidity">{{ zipCheck }}</div>
+    </div>
+    <div>Password: <input class="form-control" type="password" id="loginPassword" name="loginPassword" required
+        [(ngModel)]="inputPassword">
+      <div *ngIf="passwordCheck" class="alert alert-danger" id="passwordValidity">{{ passwordCheck }}</div>
+    </div>
+    <div>Repeat Password: <input class="form-control" type="password" id="loginPassword2" name="loginPassword2" required
+        [(ngModel)]="inputPassword2">
+    </div>
+    <br><br>
+
+    <button type="submit" class="btn btn-primary" id="submit-login" value="Submit"
+      (click)="onSubmit()">Submit</button>&nbsp;&nbsp;
+    <button type="reset" class="btn btn-primary" value="Reset">Clear</button>
+
+    <div class="forgot-password text-right">
+      Click <a id="registerTag" href="/login">here</a> for Login
+    </div>
+
+  </form>
+</body>

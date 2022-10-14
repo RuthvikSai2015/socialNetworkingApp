@@ -6,9 +6,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { AuthComponent } from './components/auth/auth.component';
 import { MainComponent } from './components/main/main.component';
-import { RegisterationComponent } from './components/auth/registeration/registeration.component';
+import { RegisterationComponent } from './components/auth/registration/registration.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { HeaderComponent } from './components/main/header/header.component';
@@ -21,8 +20,9 @@ import { ShowPostComponent } from './components/main/show-post/show-post.compone
 
 const routes: Routes = [
 
-  {path: '', redirectTo: 'auth', pathMatch: 'full'},
-  {path: "auth", component: AuthComponent},
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
+  {path:"login",component:LoginComponent},
+  {path:"register",component:RegisterationComponent},
   {path: "main", component: MainComponent},
   {path: "profile", component: ProfileComponent},
 ];
@@ -30,7 +30,6 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    AuthComponent,
     MainComponent,
     RegisterationComponent,
     ProfileComponent,

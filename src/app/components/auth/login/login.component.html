@@ -7,17 +7,26 @@
   <title>Login Page</title>
 </head>
 
-<body>
-  <form id="loginForm">
-      <h1 >User Login</h1>
-    <p>User Name: <input type="text" id="loginName" name="loginName" required [(ngModel)]="inputName" >
-      <span class="error-class" id="nameValidity">{{ nameCheck }}</span>
+<body class="app-body">
+  <div class="col-md-4 loginAbove">
+  <form id="loginForm" class="loginForm jumbotron">
+    <h3>Sign In</h3>
+    <div class="m1 form-group" >
+        <label class="floatlabel">User Name</label>
+        <input type="text" class="form-control" id="userName" name="userName" required [(ngModel)]="userName" >
+        <div *ngIf="nameCheck" class="alert alert-danger" id="nameValidity">{{ nameCheck }}</div>
+    </div>
+
+    <div class="m2 form-group">
+        <label class="floatlabel">Password</label>
+        <input type="password" class="form-control" id="userPassword" name="userPassword" required [(ngModel)]="userPassword" >   
+         <div *ngIf="passwordCheck" class="alert alert-danger" id="passwordValidity">{{ passwordCheck }}</div>
+    </div>
+     <h5> <span class="error-class" id="loginFail">{{ loginFailInfo }}</span></h5>
+    <button type="submit" id="submit" class="btn btn-dark btn-lg btn-block" (click)="onSubmit()">Sign in</button>
+    <h5></h5><p class="forgot-password text-right">
+        Click <a id="registerTag" href="/register">here</a> for register
     </p>
-    <p>Password: <input type="password" id="loginPassword" name="loginPassword" required [(ngModel)]="inputPassword" >
-      <span class="error-class" id="passwordValidity">{{ passwordCheck }}</span>
-    </p>
-  <button type="submit" class="btn btn-primary" id="submit-login" value="Submit" (click)="onSubmit()">Login</button>&nbsp;&nbsp;
-  <button type="reset" class="btn btn-primary" value="Reset">Clear</button>
-    <span class="error-class" id="loginFail">{{ loginFailInfo }}</span>
   </form>
+</div>
 </body>
