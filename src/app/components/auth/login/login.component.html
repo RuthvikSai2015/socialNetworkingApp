@@ -14,13 +14,13 @@
     <div class="m1 form-group" >
         <label class="floatlabel">User Name</label>
         <input type="text" class="form-control" id="userName" name="userName" required [(ngModel)]="userName" >
-        <div *ngIf="nameCheck" class="alert alert-danger" id="nameValidity">{{ nameCheck }}</div>
+        <div *ngIf="nameValid" class="alert alert-danger" id="nameValidity">{{ nameValid }}</div>
     </div>
 
     <div class="m2 form-group">
         <label class="floatlabel">Password</label>
         <input type="password" class="form-control" id="userPassword" name="userPassword" required [(ngModel)]="userPassword" >   
-         <div *ngIf="passwordCheck" class="alert alert-danger" id="passwordValidity">{{ passwordCheck }}</div>
+         <div *ngIf="passwordValid" class="alert alert-danger" id="passwordValidity">{{ passwordValid }}</div>
     </div>
      <h5> <span class="error-class" id="loginFail">{{ loginFailInfo }}</span></h5>
     <button type="submit" id="submit" class="btn btn-dark btn-lg btn-block" (click)="onSubmit()">Sign in</button>

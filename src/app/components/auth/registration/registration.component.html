@@ -18,30 +18,30 @@
     </div>
     <div><label class="floatlabel">Display Name:</label>
       <input class="form-control" type="text" id="loginDisplayName" name="loginDisplayName"
-        [(ngModel)]="inputDisplayName" placeholder="optional">
+        [(ngModel)]="displayName" placeholder="optional">
     </div>
     <div>Email Address: <input class="form-control" type="text" id="loginEmail" name="loginEmail" required
-        [(ngModel)]="inputEmail" placeholder="***@***">
+        [(ngModel)]="emailId" placeholder="***@***">
       <div *ngIf="emailCheck" class="alert alert-danger" id="emailValidity">{{ emailCheck }}</div>
     </div>
     <div>Contact Number: <input class="form-control" type="text" id="loginPhone" name="loginPhone" required
-        [(ngModel)]="inputPhone" placeholder="012-012-0123">
+        [(ngModel)]="contactNumber" placeholder="012-012-0123">
       <div *ngIf="phoneCheck" class="alert alert-danger" id="phoneValidity">{{ phoneCheck }}</div>
     </div>
     <div>Date of Birth: <input class="form-control" type="date" id="loginBirth" name="loginBirth" required
-        [(ngModel)]="inputBirth" placeholder="mm/dd/yyyy">
+        [(ngModel)]="dateOfBirth" placeholder="mm/dd/yyyy">
       <div *ngIf="birthCheck" class="alert alert-danger" id="BirthValidity">{{ birthCheck }}</div>
     </div>
-    <div>Zip Code: <input class="form-control" type="text" id="loginZip" name="loginZip" required [(ngModel)]="inputZIP"
+    <div>Zip Code: <input class="form-control" type="text" id="loginZip" name="loginZip" required [(ngModel)]="zipCode"
         placeholder="five digits">
       <div *ngIf="zipCheck" class="alert alert-danger" id="ZipValidity">{{ zipCheck }}</div>
     </div>
     <div>Password: <input class="form-control" type="password" id="loginPassword" name="loginPassword" required
-        [(ngModel)]="inputPassword">
+        [(ngModel)]="Password">
       <div *ngIf="passwordCheck" class="alert alert-danger" id="passwordValidity">{{ passwordCheck }}</div>
     </div>
     <div>Repeat Password: <input class="form-control" type="password" id="loginPassword2" name="loginPassword2" required
-        [(ngModel)]="inputPassword2">
+        [(ngModel)]="confirmPassword">
     </div>
     <br><br>
 

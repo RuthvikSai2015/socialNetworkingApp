@@ -18,13 +18,13 @@ export class RegisterationComponent implements OnInit {
   zipCheck: any;
   passwordCheck: any;
   userName: string | undefined;
-  inputDisplayName : string | undefined
-  inputEmail: string | undefined
-  inputPhone: string | undefined
-  inputBirth: string | undefined
-  inputZIP: string | undefined
-  inputPassword: string | undefined
-  inputPassword2: string | undefined
+  displayName : string | undefined
+  emailId: string | undefined
+  contactNumber: string | undefined
+  dateOfBirth: string | undefined
+  zipCode: string | undefined
+  Password: string | undefined
+  confirmPassword: string | undefined
   successMessage: string | undefined
   public dummyUser: any[] = [];
 
@@ -70,51 +70,51 @@ export class RegisterationComponent implements OnInit {
     if (typeof this.userName === "string")
       resultName = namePattern.test(this.userName);
     if (!resultName)
-      this.nameCheck = "Expect proper format is a string of upper and lower case letters and numbers begin with a letter";
+      this.nameCheck = "Please enter a value that is aplhanumeric";
 
     if (this.userName && resultName)
       this.nameCheck = "";
-    if (typeof this.inputEmail === "string")
-      resultEmail = emailPattern.test(this.inputEmail);
+    if (typeof this.emailId === "string")
+      resultEmail = emailPattern.test(this.emailId);
     if (!resultEmail)
-      this.emailCheck = "Expected email form should be include a @. Ex: sn_62@rice.edu";
-    if (this.inputEmail && resultEmail)
+      this.emailCheck = "Invalid Email Address! Enter a valid Email Address of the form xxxxx@xxxxx.xxx";
+    if (this.emailId && resultEmail)
       this.emailCheck = "";
-    if (typeof this.inputZIP === "string")
-      resultZIP = zipPattern.test(this.inputZIP);
+    if (typeof this.zipCode === "string")
+      resultZIP = zipPattern.test(this.zipCode);
     if (!resultZIP)
-      this.zipCheck = "Expected zip should be 5 digit";
+      this.zipCheck = "Invalid Zipcode! Enter a 5-digit Zip Code.";
     if ((<HTMLInputElement>document.getElementById("loginZip")).value.length != 5)
-      this.zipCheck = "Expected zip should be 5 digit";
-    if (this.inputZIP && resultZIP && this.inputZIP.length == 5)
+      this.zipCheck = "Invalid Zipcode! Enter a 5-digit Zip Code.";
+    if (this.zipCode && resultZIP && this.zipCode.length == 5)
       this.zipCheck = "";
-    if (typeof this.inputPhone === "string")
-      resultPhone = phonePattern.test(this.inputPhone);
+    if (typeof this.contactNumber === "string")
+      resultPhone = phonePattern.test(this.contactNumber);
     if (!resultPhone)
-      this.phoneCheck = "Expected phone number format 012-012-0123";
-    if (this.inputPhone && resultPhone)
+      this.phoneCheck = "Invalid Phone Number! Enter a 10 digit phone number in the form 123-123-1234";
+    if (this.contactNumber && resultPhone)
       this.phoneCheck = "";
     if ((<HTMLInputElement>document.getElementById("loginPassword")).value.length == 0)
       this.passwordCheck = "The password cannot be empty";
-    else if (this.inputPassword == this.inputPassword2)
+    else if (this.Password == this.confirmPassword)
       this.passwordCheck="";
     else
-      this.passwordCheck = "The password do not matched";
+      this.passwordCheck = "Passwords do not match!";
     if (this.birthCheck == "" &&
       this.nameCheck == "" &&
       this.emailCheck == "" &&
       this.zipCheck == "" &&
       this.phoneCheck == "" &&
       this.passwordCheck=="") {
-      var userInfoKey = "user:" + this.userName + ":" + this.inputPassword;
+      var userInfoKey = "user:" + this.userName + ":" + this.Password;
       var data = {
         "username": this.userName,
-        "displayName": this.inputDisplayName,
-        "password": this.inputPassword,
-        "phone": this.inputPhone,
-        "ZIP": this.inputZIP,
-        "DOB": this.inputBirth,
-        "email": this.inputEmail,
+        "displayName": this.displayName,
+        "password": this.Password,
+        "phone": this.contactNumber,
+        "ZIP": this.zipCode,
+        "DOB": this.dateOfBirth,
+        "email": this.emailId,
         "userId": 11,
         "userHeadLine": "I am happy!"
       }
@@ -124,21 +124,21 @@ export class RegisterationComponent implements OnInit {
         data.DOB = "0000-00-00";
       var data2 = {
         "username": this.userName,
-        "email": this.inputEmail,
-        "dob": this.inputBirth,
-        "zipcode": this.inputZIP,
-        "password": this.inputPassword,
-        "displayName": this.inputDisplayName,
-        "phone": this.inputPhone
+        "email": this.emailId,
+        "dob": this.dateOfBirth,
+        "zipcode": this.zipCode,
+        "password": this.Password,
+        "displayName": this.displayName,
+        "phone": this.contactNumber
       }
       this.successMessage="User Added Succesfully!";
       localStorage.setItem('userName',<string>this.userName);
-      localStorage.setItem('dateOfBirth',<string>this.inputBirth);
-      localStorage.setItem('phone',<string>this.inputPhone);
-      localStorage.setItem('ZIP',<string>this.inputZIP);
-      localStorage.setItem('displayName',<string>this.inputDisplayName);
-      localStorage.setItem('password',<string>this.inputPassword);
-      localStorage.setItem('email',<string>this.inputEmail);
+      localStorage.setItem('dateOfBirth',<string>this.dateOfBirth);
+      localStorage.setItem('phone',<string>this.contactNumber);
+      localStorage.setItem('ZIP',<string>this.zipCode);
+      localStorage.setItem('displayName',<string>this.displayName);
+      localStorage.setItem('password',<string>this.Password);
+      localStorage.setItem('email',<string>this.emailId);
     }
   }
 }

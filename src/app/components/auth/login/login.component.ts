@@ -14,10 +14,10 @@ import { Observable} from "rxjs";
 })
 export class LoginComponent implements OnInit {
   url: string
-  nameCheck: any;
+  nameValid: any;
   userPassword: string | undefined;
   userName: any;
-  passwordCheck: string | undefined;
+  passwordValid: string | undefined;
   loginFailInfo: any;
   public dummyUser: any[] = [];
 
@@ -29,8 +29,8 @@ export class LoginComponent implements OnInit {
                   private followerService: FollowerService) {
                     this.userName="";
                     this.userPassword="";
-      this.nameCheck = "";
-      this.passwordCheck = "";
+      this.nameValid = "";
+      this.passwordValid = "";
       this.url = "";  
    }
 
@@ -40,19 +40,19 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (!this.userName) {
-       this.nameCheck = "UserName cannot be empty";
+       this.nameValid = "UserName cannot be empty";
        return;
     }
     else
-      this.nameCheck = "";
+      this.nameValid = "";
     if (!this.userPassword) {
-      this.passwordCheck = "Password cannot be empty";
+      this.passwordValid = "Password cannot be empty";
        return;
     }
     else
-      this.passwordCheck = "";
+      this.passwordValid = "";
 
-    if (this.nameCheck == "" && this.passwordCheck=="") {
+    if (this.nameValid == "" && this.passwordValid=="") {
      var  LoginForm = {
         "username": this.userName,
         "password": this.userPassword
