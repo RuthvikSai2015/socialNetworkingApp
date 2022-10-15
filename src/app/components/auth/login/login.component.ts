@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { Router } from "@angular/router";
-import { UserService } from "../../../services/user.service";
 import { test, User } from 'src/app/common/user';
 import { Observable } from "rxjs";
 
@@ -17,18 +16,17 @@ export class LoginComponent implements OnInit {
   userName: any;
   passwordValid: string | undefined;
   loginFailInfo: any;
-  public dummyUser: Observable<User[]>;
+  //public dummyUser: Observable<User[]>;
   loginFlag: boolean;
 
   constructor(private http: HttpClient,
-    private router: Router,
-    private userService: UserService
+    private router: Router
   ) {
     this.userName = "";
     this.userPassword = "";
     this.nameValid = "";
     this.passwordValid = "";
-    this.dummyUser = this.userService.getDummyUsers();
+    // this.dummyUser = this.userService.getDummyUsers();
     this.loginFlag = false;
     this.url = "https://jsonplaceholder.typicode.com/users";
   }
@@ -52,7 +50,6 @@ export class LoginComponent implements OnInit {
       this.passwordValid = "";
 
     if (this.nameValid == "" && this.passwordValid == "") {
-      console.log(this.dummyUser);
       this.http.get(this.url, { withCredentials: true }).subscribe(response => {
         for (let data in response) {
           // @ts-ignore

@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from "../../../services/data.service";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { Follower } from "../../../common/follower";
-import { FollowerService } from "../../../services/follower.service"
 
 @Component({
   selector: 'app-follower',
@@ -17,10 +15,9 @@ export class FollowerComponent implements OnInit {
   public dummyFollowersNames: [];
   public dummyFollowers: Follower[];
   tempDummyFollowers: any;
-  constructor(private userData: DataService,
+  constructor(
     private http: HttpClient,
-    private router: Router,
-    private followerService: FollowerService,
+    private router: Router
   ) {
     this.dummyFollowersNames = [];
     this.dummyFollowers = [];

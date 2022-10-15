@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
-import { DataService } from "../../../services/data.service";
 import { HeaderService } from "./header.service";
 @Component({
   selector: 'app-header',
@@ -18,8 +17,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(private http: HttpClient,
     private router: Router,
-    private hServ: HeaderService,
-    private userData: DataService) {
+    private hServ: HeaderService) {
     this.url = " ";  
   }
 

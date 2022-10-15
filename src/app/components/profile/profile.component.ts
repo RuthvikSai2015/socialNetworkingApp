@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
-import { DataService } from "../../services/data.service";
 
 @Component({
   selector: 'app-profile',
@@ -32,14 +31,13 @@ export class ProfileComponent implements OnInit {
   imgUrl: string | undefined;
   successMessage: string | undefined;
   // fileToUpload: File | null = null;
-  constructor(private http: HttpClient, private router: Router, private data: DataService, private userData: DataService) {
+  constructor(private http: HttpClient, private router: Router) {
     this.nameCheck = "";
     this.emailCheck = "";
     this.birthCheck = "";
     this.zipCheck = "";
     this.phoneCheck = "";
     this.passwordCheck = "";
-    this.data.currentMessage.subscribe(res => this.userName = res);
     this.url = "";
     this.successMessage = "";
   }
