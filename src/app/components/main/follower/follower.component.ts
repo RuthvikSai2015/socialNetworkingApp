@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import{ DataService} from "../../../services/data.service";
-import {HttpClient} from "@angular/common/http";
-import {Router} from "@angular/router";
-import {Follower} from "../../../common/follower";
-import { FollowerService} from "../../../services/follower.service"
+import { DataService } from "../../../services/data.service";
+import { HttpClient } from "@angular/common/http";
+import { Router } from "@angular/router";
+import { Follower } from "../../../common/follower";
+import { FollowerService } from "../../../services/follower.service"
 
 @Component({
   selector: 'app-follower',
@@ -18,54 +18,59 @@ export class FollowerComponent implements OnInit {
   public dummyFollowers: Follower[];
   tempDummyFollowers: any;
   constructor(private userData: DataService,
-              private http: HttpClient,
-              private router: Router,
-              private followerService: FollowerService,
+    private http: HttpClient,
+    private router: Router,
+    private followerService: FollowerService,
   ) {
     this.dummyFollowersNames = [];
     this.dummyFollowers = [];
-    this.url = "";   
+    this.url = "";
 
   }
   ngOnInit(): void {
     this.dummyFollowersNames = [];
-    this.dummyFollowers.push({
-      "image": "../assets/images/image3.png",
-      "name": "name",
-      "status": "away"
-    })
+    if (localStorage.getItem("userId")?.toString() != <string>"newUser") {
+      for (let x = 1; x <= 3; x++) {
+        this.dummyFollowers.push({
+          "image": `../assets/images/image${x}.png`,
+          "name": `follower${x}`,
+          "status": "away"
+        })
+      }
+    }
+
   }
-  createFollowersHelper(i : number) {
-   
+  createFollowersHelper(i: number) {
+
   }
 
-   createFollowers() {
+  createFollowers() {
 
     var newF = (<HTMLInputElement>document.getElementById("newFollower")).value
-   
-    if (newF != "" ) {
+
+    if (newF != "") {
 
       this.dummyFollowers.push({
         "image": "../assets/images/image4.png",
         "name": newF,
         "status": "online"
       })
-      
+
     }
-   //  window.location.reload();
+    //  window.location.reload();
   }
 
   removeFollowersHelper(removeId: number) {
   }
 
   removeFollowers(removeName: string) {
-    for(let x in this.dummyFollowers){
-      if(this.dummyFollowers[x].name === removeName){
+    for (let x in this.dummyFollowers) {
+      if (this.dummyFollowers[x].name === removeName) {
         delete this.dummyFollowers[x];
       }
     }
-   
-   window.location.reload();
+
+    window.location.reload();
   }
 
 }

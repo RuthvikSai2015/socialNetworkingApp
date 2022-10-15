@@ -26,7 +26,10 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.userName = localStorage.getItem('userName')?.toString();;
     this.userHeadLine = "headline";
+    // @ts-ignore
+    if(localStorage.getItem("userId")?.toString() != <string>"newUser"){
     this.imgUrl = "https://m.media-amazon.com/images/I/71zIISn3b5S._SX425_.jpg";
+    }
 
   }
 

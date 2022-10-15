@@ -19,9 +19,9 @@ export class PostComponent implements OnInit {
   usersToQuery: any;
   imgUrl: any;
   author: any;
-  public dummyPost: any[] = [];  //all posts( ten person)
+  public dummyPost: any[] = [];  
   public tempPostForSearch: any[] = [];
-  public tempPost: any[] = []; //post need to print (searched posts or the 4 person posts)
+  public tempPost: any[] = []; 
   public addedPost: any[] = [];
   public searchedPost: any[] = [];
   inputSearch: any;
@@ -92,7 +92,7 @@ export class PostComponent implements OnInit {
         // @ts-ignore
         if (localStorage.getItem("userId") == response[data].userId) {
            // @ts-ignore
-          authorData = this.getUserName(response[data].id);
+          authorData = this.getUserName(i);
           this.tempPost.push({
             url: `../assets/images/image${i}.png`,
             // @ts-ignore
@@ -140,15 +140,15 @@ export class PostComponent implements OnInit {
     this.inputNewPost = "";
   }
 
-  newSearch() {
-    var tempPost2 = this.tempPost;
+  searchFunction() {
+    var tempPostSwap = this.tempPost;
     if (this.tempPostForSearch.length != 0)
-      tempPost2 = this.tempPostForSearch;
+      tempPostSwap = this.tempPostForSearch;
     this.searchedPost = [];
-    this.tempPostForSearch = tempPost2;
-    for (var i = 0; i < tempPost2.length; i++) {
-      if (tempPost2[i].author.includes(this.inputSearch) || tempPost2[i].text.includes(this.inputSearch)) {
-        this.searchedPost.push(tempPost2[i]);
+    this.tempPostForSearch = tempPostSwap;
+    for (var i = 0; i < tempPostSwap.length; i++) {
+      if (tempPostSwap[i].author.includes(this.inputSearch) || tempPostSwap[i].title.includes(this.inputSearch) || tempPostSwap[i].text.includes(this.inputSearch)) {
+        this.searchedPost.push(tempPostSwap[i]);
       }
     }
     this.tempPost = this.searchedPost;

@@ -45,7 +45,7 @@ export class ProfileComponent implements OnInit {
     this.url = "";
   }
   ngOnInit(): void {
-     this.imgUrl = "../assets/images/profilePic.png";
+     this.imgUrl = "https://m.media-amazon.com/images/I/71zIISn3b5S._SX425_.jpg";
       this.userName = localStorage.getItem('userName')?.toString();
       this.DOB = <string>localStorage?.getItem('dateOfBirth');
       this.phone = <string>localStorage?.getItem('phone');

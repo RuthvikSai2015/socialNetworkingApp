@@ -114,6 +114,7 @@ export class RegisterationComponent implements OnInit {
      
       this.successMessage="User Added Succesfully!";
       localStorage.setItem('userName',<string>this.userName);
+      localStorage.setItem('userId',<string>"newUser");
       localStorage.setItem('dateOfBirth',<string>this.dateOfBirth);
       localStorage.setItem('phone',<string>this.contactNumber);
       localStorage.setItem('ZIP',<string>this.zipCode);
