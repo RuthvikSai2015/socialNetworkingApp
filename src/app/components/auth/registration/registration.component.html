@@ -12,35 +12,35 @@
     <h1>User Registration</h1>
     <hr>
     <div *ngIf="successMessage" class="alert alert-success" id="successMessage"><em>{{ successMessage }}</em></div>
-    <div> <label class="floatlabel">User Name: </label><input class="form-control" type="text" id="loginName"
-        name="loginName" required [(ngModel)]="userName" placeholder="begin with letter">
+    <div> <label class="floatlabel">User Name: </label><input class="form-control" type="text" id="userName"
+        name="userName" required [(ngModel)]="userName" placeholder="begin with letter">
       <div *ngIf="nameCheck" class="alert alert-danger" id="nameValidity">{{ nameCheck }}</div>
     </div>
     <div><label class="floatlabel">Display Name:</label>
-      <input class="form-control" type="text" id="loginDisplayName" name="loginDisplayName"
+      <input class="form-control" type="text" id="displayName" name="displayName"
         [(ngModel)]="displayName" placeholder="optional">
     </div>
-    <div>Email Address: <input class="form-control" type="text" id="loginEmail" name="loginEmail" required
+    <div>Email Address: <input class="form-control" type="text" id="emailId" name="emailId" required
         [(ngModel)]="emailId" placeholder="***@***">
       <div *ngIf="emailCheck" class="alert alert-danger" id="emailValidity">{{ emailCheck }}</div>
     </div>
-    <div>Contact Number: <input class="form-control" type="text" id="loginPhone" name="loginPhone" required
+    <div>Contact Number: <input class="form-control" type="text" id="contactNumber" name="contactNumber" required
         [(ngModel)]="contactNumber" placeholder="012-012-0123">
       <div *ngIf="phoneCheck" class="alert alert-danger" id="phoneValidity">{{ phoneCheck }}</div>
     </div>
-    <div>Date of Birth: <input class="form-control" type="date" id="loginBirth" name="loginBirth" required
+    <div>Date of Birth: <input class="form-control" type="date" id="dateOfBirth" name="dateOfBirth" required
         [(ngModel)]="dateOfBirth" placeholder="mm/dd/yyyy">
       <div *ngIf="birthCheck" class="alert alert-danger" id="BirthValidity">{{ birthCheck }}</div>
     </div>
-    <div>Zip Code: <input class="form-control" type="text" id="loginZip" name="loginZip" required [(ngModel)]="zipCode"
+    <div>Zip Code: <input class="form-control" type="text" id="zipCode" name="zipCode" required [(ngModel)]="zipCode"
         placeholder="five digits">
       <div *ngIf="zipCheck" class="alert alert-danger" id="ZipValidity">{{ zipCheck }}</div>
     </div>
-    <div>Password: <input class="form-control" type="password" id="loginPassword" name="loginPassword" required
+    <div>Password: <input class="form-control" type="password" id="password" name="password" required
         [(ngModel)]="Password">
       <div *ngIf="passwordCheck" class="alert alert-danger" id="passwordValidity">{{ passwordCheck }}</div>
     </div>
-    <div>Repeat Password: <input class="form-control" type="password" id="loginPassword2" name="loginPassword2" required
+    <div>Repeat Password: <input class="form-control" type="password" id="confirmPassword" name="confirmPassword" required
         [(ngModel)]="confirmPassword">
     </div>
     <br><br>

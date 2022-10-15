@@ -107,30 +107,7 @@ export class RegisterationComponent implements OnInit {
       this.phoneCheck == "" &&
       this.passwordCheck=="") {
       var userInfoKey = "user:" + this.userName + ":" + this.Password;
-      var data = {
-        "username": this.userName,
-        "displayName": this.displayName,
-        "password": this.Password,
-        "phone": this.contactNumber,
-        "ZIP": this.zipCode,
-        "DOB": this.dateOfBirth,
-        "email": this.emailId,
-        "userId": 11,
-        "userHeadLine": "I am happy!"
-      }
-      if (data.displayName == null)
-        data.displayName = "undefined";
-      if (data.DOB == null)
-        data.DOB = "0000-00-00";
-      var data2 = {
-        "username": this.userName,
-        "email": this.emailId,
-        "dob": this.dateOfBirth,
-        "zipcode": this.zipCode,
-        "password": this.Password,
-        "displayName": this.displayName,
-        "phone": this.contactNumber
-      }
+     
       this.successMessage="User Added Succesfully!";
       localStorage.setItem('userName',<string>this.userName);
       localStorage.setItem('dateOfBirth',<string>this.dateOfBirth);
