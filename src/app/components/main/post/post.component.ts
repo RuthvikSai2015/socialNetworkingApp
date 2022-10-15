@@ -111,13 +111,16 @@ export class PostComponent implements OnInit {
   }
   getUserName(id: any) {
     console.log(id);
-    let userFirstName = ""
+    let userFirstName = "";
     for(let newData in this.author){
        // @ts-ignore
       if(id == this.author[newData].id){
          // @ts-ignore
         userFirstName= this.author[newData].name;
       }
+    }
+    if(userFirstName == ""){
+      userFirstName="Sample Author"
     }
     return userFirstName;
   }
