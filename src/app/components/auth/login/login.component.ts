@@ -67,13 +67,13 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['main']);
           }
         }
-        if (this.userName.trim() == <string>localStorage.getItem("userName") && this.userPassword == <string>localStorage.getItem("password")) {
-          console.log("newUser");
-          this.loginFlag = true;
-          this.loginFailInfo ="";
-          this.router.navigate(['main']);
-        }
       })
+      if (this.userName.trim() == <string>localStorage.getItem("userName") && this.userPassword == <string>localStorage.getItem("password")) {
+        console.log("newUser");
+        this.loginFlag = true;
+        this.loginFailInfo ="";
+        this.router.navigate(['main']);
+      }
     }
     this.loginFailInfo = "The input data do not match to our user database, try again!";
   }

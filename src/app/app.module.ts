@@ -13,7 +13,6 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { HeaderComponent } from './components/main/header/header.component';
 import { PostComponent } from './components/main/post/post.component';
 import { FollowerComponent } from './components/main/follower/follower.component';
-import { ShowPostComponent } from './components/main/show-post/show-post.component';
 
 
 
@@ -36,8 +35,7 @@ const routes: Routes = [
     LoginComponent,
     HeaderComponent,
     PostComponent,
-    FollowerComponent,
-    ShowPostComponent
+    FollowerComponent
   ],
   imports: [
     BrowserModule,
