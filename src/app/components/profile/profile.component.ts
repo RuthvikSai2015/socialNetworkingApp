@@ -26,6 +26,8 @@ export class ProfileComponent implements OnInit {
   phone: any;
   email: any;
   dateOfBirthDisplay: any;
+  contactNumberDisplay:any;
+  userNameDisplay: any;
   zipDisplay: any;
   img: File | undefined;
   imgUrl: string | undefined;
@@ -40,16 +42,37 @@ export class ProfileComponent implements OnInit {
     this.passwordCheck = "";
     this.url = "";
     this.successMessage = "";
+    this.userName="";
   }
   ngOnInit(): void {
     this.imgUrl = "https://m.media-amazon.com/images/I/71zIISn3b5S._SX425_.jpg";
-    this.userName = localStorage.getItem('userName')?.toString();
-    this.dateOfBirthDisplay = <string>localStorage.getItem('dateOfBirth');
-    this.phone = <string>localStorage.getItem('phone');
-    this.zipDisplay = <string>localStorage.getItem('zipCode');
+    this.userName='';
+     // @ts-ignore
+    document.getElementById("userName").value="";
+    this.userNameDisplay = localStorage.getItem('userName')?.toString();
+    if(<string>localStorage.getItem('dateOfBirth')){
+      this.dateOfBirthDisplay = <string>localStorage.getItem('dateOfBirth');
+    }else{
+      this.dateOfBirthDisplay = "01-01-1994";
+    }
+    if(<string>localStorage.getItem(('phone'))){
+      this.contactNumberDisplay = <string>localStorage.getItem('phone');
+    }else{
+      this.contactNumberDisplay ="123-123-1234";
+    }
+    if(<string>localStorage.getItem('zipCode')){
+      this.zipDisplay = <string>localStorage.getItem('zipCode');
+    }else{
+      this.zipDisplay = "34567";
+    }
+    if(<string>localStorage?.getItem(('email'))){
+      this.email = <string>localStorage?.getItem(('email'));
+    }else{
+      this.email = "sn_62@rice.edu";
+    }
     this.displayName = <string>localStorage.getItem('displayName');
     //  this.Password = <string>localStorage?.getItem(('password'));
-    this.email = <string>localStorage?.getItem(('email'));
+    
 
   }
 
@@ -85,6 +108,7 @@ export class ProfileComponent implements OnInit {
     else {
       this.birthCheck = "";
     }
+  
     if (this.userName != '') {
       if (typeof this.userName === "string")
         if (this.userName != '') {
@@ -146,7 +170,7 @@ export class ProfileComponent implements OnInit {
       if (this.dateOfBirth && this.dateOfBirth != '') {
         localStorage.setItem('dateOfBirth', <string>this.dateOfBirth);
       }
-      if (this.dateOfBirth && this.dateOfBirth != '') {
+      if (this.contactNumber && this.contactNumber != '') {
         localStorage.setItem('phone', <string>this.contactNumber);
       }
       if (this.zipCode) {

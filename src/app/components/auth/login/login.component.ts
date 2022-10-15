@@ -72,6 +72,8 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['main']);
       }
     }
+    if(!this.loginFlag){
     this.loginFailInfo = "The input data do not match to our user database, try again!";
+    }
   }
 }
