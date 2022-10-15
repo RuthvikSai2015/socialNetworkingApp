@@ -54,7 +54,7 @@ export class RegisterationComponent implements OnInit {
     var resultPhone;
     var today = new Date();
     var now = today.getTime();
-    var dob = document.getElementById("loginBirth")
+    var dob = document.getElementById("dateOfBirth")
     var ymd = (<HTMLInputElement>dob).value.split("-");
     var dobyear = parseInt(ymd[0]) + 18;
     var dobmonth = parseInt(ymd[1], 10);
