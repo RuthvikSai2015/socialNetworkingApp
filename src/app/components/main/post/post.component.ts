@@ -45,6 +45,8 @@ export class PostComponent implements OnInit {
           url:`../assets/images/image${i}.png`,
           author: <string>localStorage.getItem("userName"),
             // @ts-ignore
+          title:response.title,
+           // @ts-ignore
           text:response.body,
           date:new Date(),
         })
@@ -66,13 +68,6 @@ export class PostComponent implements OnInit {
     
   }
 
-  newPost2() {
-   
-        this.tempPost.unshift();
-        this.addedPost.push();
-        this.inputNewPost2 = "";
-
-  }
   clearPost() {
     this.inputNewPost = "";
   }
