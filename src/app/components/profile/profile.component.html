@@ -53,6 +53,7 @@
                     <form id="changeInfoForm">
                       <h3>Edit Profile</h3>
                       <br>
+                      <div *ngIf="successMessage" class="alert alert-success" id="successMessage"><em>{{ successMessage }}</em></div>
                       <div> <label class="floatlabel">User Name: </label><input class="form-control" type="text"
                           id="userName" name="userName" required [(ngModel)]="userName"
                           placeholder="must begin with letter">
