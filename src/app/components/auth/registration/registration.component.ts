@@ -44,7 +44,7 @@ export class RegisterationComponent implements OnInit {
   }
 
   onSubmit() {
-    var namePattern = new RegExp("[a-zA-Z]+[a-zA-Z0-9]*");
+    var namePattern =  new RegExp("^[A-Za-z]\\w{3,29}$");
     var emailPattern = new RegExp(".@.")
     var zipPattern = new RegExp("[0-9]{5}")
     var phonePattern = new RegExp("[0-9]{3}-[0-9]{3}-[0-9]{4}")
@@ -54,13 +54,17 @@ export class RegisterationComponent implements OnInit {
     var resultPhone;
     var today = new Date();
     var now = today.getTime();
-    var dob = document.getElementById("dateOfBirth")
+    var dob = document.getElementById("dateOfBirth");
     var ymd = (<HTMLInputElement>dob).value.split("-");
     var dobyear = parseInt(ymd[0]) + 18;
     var dobmonth = parseInt(ymd[1], 10);
     var dobday = parseInt(ymd[2], 10);
     var userDob = new Date();
     userDob.setFullYear(dobyear, dobmonth - 1, dobday);
+   if(typeof this.dateOfBirth === "string"){
+    this.birthCheck = "Please enter Date of Birth";
+   }
+      
     if (userDob.getTime() > now) {
       this.birthCheck = "User must older than 18 years old";
     }
@@ -70,7 +74,7 @@ export class RegisterationComponent implements OnInit {
     if (typeof this.userName === "string")
       resultName = namePattern.test(this.userName);
     if (!resultName)
-      this.nameCheck = "Please enter a value that should not start with digit and should contain uppercase and lowercase letters";
+      this.nameCheck = "Please enter a valid value that should not start with digit and min length is 6";
 
     if (this.userName && resultName)
       this.nameCheck = "";

@@ -34,7 +34,7 @@ export class HeaderComponent implements OnInit {
     this.userName = "";
     this.inputNewStatus = "";
     this.userHeadLine = "";
-    localStorage.removeItem("followers");
+    localStorage.clear();
   }
   logOut() {
     this.logOutHelper();

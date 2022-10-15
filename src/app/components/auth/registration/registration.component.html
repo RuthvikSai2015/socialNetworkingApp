@@ -13,7 +13,7 @@
     <hr>
     <div *ngIf="successMessage" class="alert alert-success" id="successMessage"><em>{{ successMessage }}</em></div>
     <div> <label class="floatlabel">User Name: </label><input class="form-control" type="text" id="userName"
-        name="userName" required [(ngModel)]="userName" placeholder="begin with letter">
+        name="userName" required [(ngModel)]="userName" placeholder="must begin with letter">
       <div *ngIf="nameCheck" class="alert alert-danger" id="nameValidity">{{ nameCheck }}</div>
     </div>
     <div><label class="floatlabel">Display Name:</label>
@@ -21,11 +21,11 @@
         [(ngModel)]="displayName" placeholder="optional">
     </div>
     <div>Email Address: <input class="form-control" type="text" id="emailId" name="emailId" required
-        [(ngModel)]="emailId" placeholder="***@***">
+        [(ngModel)]="emailId" placeholder="xxxxx@xxxxx.xxx">
       <div *ngIf="emailCheck" class="alert alert-danger" id="emailValidity">{{ emailCheck }}</div>
     </div>
     <div>Contact Number: <input class="form-control" type="text" id="contactNumber" name="contactNumber" required
-        [(ngModel)]="contactNumber" placeholder="012-012-0123">
+        [(ngModel)]="contactNumber" placeholder="123-123-1234">
       <div *ngIf="phoneCheck" class="alert alert-danger" id="phoneValidity">{{ phoneCheck }}</div>
     </div>
     <div>Date of Birth: <input class="form-control" type="date" id="dateOfBirth" name="dateOfBirth" required
@@ -33,14 +33,14 @@
       <div *ngIf="birthCheck" class="alert alert-danger" id="BirthValidity">{{ birthCheck }}</div>
     </div>
     <div>Zip Code: <input class="form-control" type="text" id="zipCode" name="zipCode" required [(ngModel)]="zipCode"
-        placeholder="five digits">
+        placeholder="enter five digits">
       <div *ngIf="zipCheck" class="alert alert-danger" id="ZipValidity">{{ zipCheck }}</div>
     </div>
     <div>Password: <input class="form-control" type="password" id="password" name="password" required
         [(ngModel)]="Password">
       <div *ngIf="passwordCheck" class="alert alert-danger" id="passwordValidity">{{ passwordCheck }}</div>
     </div>
-    <div>Repeat Password: <input class="form-control" type="password" id="confirmPassword" name="confirmPassword" required
+    <div>Re-Enter Password: <input class="form-control" type="password" id="confirmPassword" name="confirmPassword" required
         [(ngModel)]="confirmPassword">
     </div>
     <br><br>

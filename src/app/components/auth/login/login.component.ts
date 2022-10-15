@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
-import { DataService} from "../../../services/data.service";
 import {UserService} from "../../../services/user.service";
-import { PostService} from "../../../services/post.service"
-import { FollowerService} from "../../../services/follower.service";
+import {test, User} from 'src/app/common/user';
 import { Observable} from "rxjs";
 
 @Component({
@@ -19,19 +17,18 @@ export class LoginComponent implements OnInit {
   userName: any;
   passwordValid: string | undefined;
   loginFailInfo: any;
-  public dummyUser: any[] = [];
+  public dummyUser: Observable<User[]>;
 
   constructor(    private http: HttpClient,
                   private router: Router,
-                  private dataTransmit: DataService,
-                  private userTransmit: UserService,
-                  private postTransmit: PostService,
-                  private followerService: FollowerService) {
+                  private userService: UserService
+                  ) {
                     this.userName="";
                     this.userPassword="";
       this.nameValid = "";
       this.passwordValid = "";
-      this.url = "";  
+      this.dummyUser = this.userService.getDummyUsers();
+      this.url = "https://jsonplaceholder.typicode.com/users";  
    }
 
 
@@ -57,10 +54,25 @@ export class LoginComponent implements OnInit {
         "username": this.userName,
         "password": this.userPassword
       }
-      localStorage.setItem("userLoginForm", JSON.stringify(LoginForm));
-      this.router.navigate(['main']);
-    
+      console.log(this.dummyUser);
+      this.http.get(this.url , { withCredentials: true}).subscribe(response => {
+         for(let data in response){
+             // @ts-ignore
+             if(this.userName.trim() == response[data].username && this.userPassword == response[data]["address"].street){
+                console.log("username match");
+                // @ts-ignore
+                localStorage.setItem("userId",response[data].id);
+                localStorage.setItem('userName',<string>this.userName);
+                localStorage.setItem('password',<string>this.userPassword);
+                this.router.navigate(['main']);
+             }
+         }
+      })
     }
+    if(this.userName.trim() == <string>localStorage.getItem("userName") && this.userPassword == <string>localStorage.getItem("password")){
+       console.log("newUser");
+       this.router.navigate(['main']);
+      }
     this.loginFailInfo = "The input data do not match to our user database, try again!"
     }
 
