@@ -70,7 +70,7 @@ export class RegisterationComponent implements OnInit {
     if (typeof this.userName === "string")
       resultName = namePattern.test(this.userName);
     if (!resultName)
-      this.nameCheck = "Please enter a value that is aplhanumeric";
+      this.nameCheck = "Please enter a value that should not start with digit and should contain uppercase and lowercase letters";
 
     if (this.userName && resultName)
       this.nameCheck = "";
