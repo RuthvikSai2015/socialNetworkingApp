@@ -117,7 +117,7 @@ export class RegisterationComponent implements OnInit {
       localStorage.setItem('userId',<string>"newUser");
       localStorage.setItem('dateOfBirth',<string>this.dateOfBirth);
       localStorage.setItem('phone',<string>this.contactNumber);
-      localStorage.setItem('ZIP',<string>this.zipCode);
+      localStorage.setItem('zipCode',<string>this.zipCode);
       localStorage.setItem('displayName',<string>this.displayName);
       localStorage.setItem('password',<string>this.Password);
       localStorage.setItem('email',<string>this.emailId);

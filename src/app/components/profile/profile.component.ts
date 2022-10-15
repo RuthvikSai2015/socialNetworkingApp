@@ -26,8 +26,8 @@ export class ProfileComponent implements OnInit {
   confirmPassword: string | undefined
   phone: any;
   email: any;
-  DOB: any;
-  ziper: any;
+  dateOfBirthDisplay: any;
+  zipDisplay: any;
   img: File | undefined;
   imgUrl: string | undefined;
   successMessage: string | undefined;
@@ -46,10 +46,10 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.imgUrl = "https://m.media-amazon.com/images/I/71zIISn3b5S._SX425_.jpg";
     this.userName = localStorage.getItem('userName')?.toString();
-    this.DOB = <string>localStorage?.getItem('dateOfBirth');
-    this.phone = <string>localStorage?.getItem('phone');
-    this.ziper = <string>localStorage?.getItem('ZIP');
-    this.displayName = <string>localStorage?.getItem('displayName');
+    this.dateOfBirthDisplay = <string>localStorage.getItem('dateOfBirth');
+    this.phone = <string>localStorage.getItem('phone');
+    this.zipDisplay = <string>localStorage.getItem('zipCode');
+    this.displayName = <string>localStorage.getItem('displayName');
     //  this.Password = <string>localStorage?.getItem(('password'));
     this.email = <string>localStorage?.getItem(('email'));
 
@@ -142,7 +142,24 @@ export class ProfileComponent implements OnInit {
       this.phoneCheck == "" &&
       this.passwordCheck == "") {
       this.successMessage = "User Details Updated Succesfully!";
-      localStorage.setItem("userName", <string>this.userName);
+      if (this.userName) {
+        localStorage.setItem('userName', <string>this.userName);
+      }
+      if (this.dateOfBirth && this.dateOfBirth != '') {
+        localStorage.setItem('dateOfBirth', <string>this.dateOfBirth);
+      }
+      if (this.dateOfBirth && this.dateOfBirth != '') {
+        localStorage.setItem('phone', <string>this.contactNumber);
+      }
+      if (this.zipCode) {
+        localStorage.setItem('zipCode', <string>this.zipCode);
+      }
+      localStorage.setItem('displayName', <string>this.displayName);
+      localStorage.setItem('password', <string>this.Password);
+      if (this.emailId && this.emailId != '') {
+        localStorage.setItem('email', <string>this.emailId);
+      }
+      window.location.reload();
       this.router.navigate(['profile']);
     }
   }
