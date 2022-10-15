@@ -84,7 +84,7 @@ export class RegisterationComponent implements OnInit {
       resultZIP = zipPattern.test(this.zipCode);
     if (!resultZIP)
       this.zipCheck = "Invalid Zipcode! Enter a 5-digit Zip Code.";
-    if ((<HTMLInputElement>document.getElementById("loginZip")).value.length != 5)
+    if ((<HTMLInputElement>document.getElementById("zipCode")).value.length != 5)
       this.zipCheck = "Invalid Zipcode! Enter a 5-digit Zip Code.";
     if (this.zipCode && resultZIP && this.zipCode.length == 5)
       this.zipCheck = "";
@@ -94,7 +94,7 @@ export class RegisterationComponent implements OnInit {
       this.phoneCheck = "Invalid Phone Number! Enter a 10 digit phone number in the form 123-123-1234";
     if (this.contactNumber && resultPhone)
       this.phoneCheck = "";
-    if ((<HTMLInputElement>document.getElementById("loginPassword")).value.length == 0)
+    if ((<HTMLInputElement>document.getElementById("password")).value.length == 0)
       this.passwordCheck = "The password cannot be empty";
     else if (this.Password == this.confirmPassword)
       this.passwordCheck="";
