@@ -22,7 +22,7 @@
         <input type="password" class="form-control" id="userPassword" name="userPassword"  [(ngModel)]="userPassword" required>   
          <div *ngIf="passwordValid" class="alert alert-danger" id="passwordValidity">{{ passwordValid }}</div>
     </div>
-     <h5> <span class="error-class" id="loginFail">{{ loginFailInfo }}</span></h5>
+     <h5> <div *ngIf="loginFailInfo" class="alert alert-danger" id="loginFail">{{ loginFailInfo }}</div></h5>
     <button type="submit" id="submit" class="btn btn-dark btn-lg btn-block" (click)="onSubmit()">Sign in</button>
     <h5></h5><p class="forgot-password text-right">
         Click <a id="registerTag" href="/register">here</a> for register

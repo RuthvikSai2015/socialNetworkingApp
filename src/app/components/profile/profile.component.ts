@@ -162,33 +162,4 @@ export class ProfileComponent implements OnInit {
       this.router.navigate(['profile']);
     }
   }
-  // uploadImage(event) {
-  //   if (event.target.files && event.target.files[0]) {
-  //     this.img = <File>event.target.files[0]
-  //     var data = new FormData()
-  //     data.append('image', this.img, this.img.name)
-  //     this.pServ.uploadAvatar(data).subscribe(res => {
-  //       if (res['img'])
-  //         this.imgUrl = res['img']
-  //       else
-  //         this.imgUrl = ''
-  //     })
-  //   }
-  // }
-  // handleFileInput(files: FileList) {
-  //   this.fileToUpload = files.item(0);
-  // }
-  // uploadFileToActivity() {
-  //   this.fileUploadService.postFile(this.fileToUpload).subscribe(data => {
-  //     // do something, if upload success
-  //   }, error => {
-  //   });
-  // }
-
-  uploadImage() {
-  
-     
-    }
-
-
 }
