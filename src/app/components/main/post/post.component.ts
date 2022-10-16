@@ -130,7 +130,19 @@ export class PostComponent implements OnInit {
     }
   }
   newPost() {
-
+    this.tempPost.push({
+      url: `../assets/images/image4.png`,
+      // @ts-ignore
+      author: localStorage.getItem("userName"),
+      // @ts-ignore
+      title: "New Title",
+      // @ts-ignore
+      text: this.inputNewPost,
+      date: new Date(),
+    })
+    this.tempPost.sort(
+      (objA, objB) => Number(objB.date) - Number(objA.date),
+    );
   }
 
   clearPost() {
