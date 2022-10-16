@@ -109,15 +109,13 @@ export class ProfileComponent implements OnInit {
       this.birthCheck = "";
     }
   
-    if (this.userName != '') {
-      if (typeof this.userName === "string")
-        if (this.userName != '') {
+    if (this.userName && this.userName != '') {
           resultName = namePattern.test(this.userName);
-        }
+          if (!resultName)
+          this.nameCheck = "Please enter a valid value that should not start with digit and min length is 6";
     }
 
-    if (!resultName)
-      this.nameCheck = "Please enter a valid value that should not start with digit and min length is 6";
+   
 
     if (this.userName && resultName && this.userName != "")
       this.nameCheck = "";
@@ -148,7 +146,7 @@ export class ProfileComponent implements OnInit {
 
     if (this.contactNumber && resultPhone)
       this.phoneCheck = "";
-    if (this.Password) {
+    if (this.Password && this.Password != '') {
       if ((<HTMLInputElement>document.getElementById("password")).value.length == 0)
         this.passwordCheck = "The password cannot be empty";
       else if (this.Password == this.confirmPassword)
