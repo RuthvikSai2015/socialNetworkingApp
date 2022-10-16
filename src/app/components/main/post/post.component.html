@@ -34,19 +34,19 @@
     <div class="section-content section-content-p30">
       <div class="container-fluid">
         <div class="row">
-          <div *ngFor="let tempCurrPosts of tempPost" class="col-md-3">
+          <div *ngFor="let currentPosts of tempPost" class="col-md-3">
             <br>
             <div class="followers-box">
               <div class="card" style="width: 16rem;">
-                <img class="card-img-top" width="100%" src="{{ tempCurrPosts.url }}" alt="Card image cap">
+                <img class="card-img-top" width="100%" src="{{ currentPosts.url }}" alt="Card image cap">
                 <div class="card-body">
                   <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                     card's content.</p> -->
                   <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><b>timestamp:</b> {{ tempCurrPosts.date}}</li>
-                    <li class="list-group-item"><b>author:</b> {{ tempCurrPosts.author}}</li>
-                    <li class="list-group-item"><b>title: </b>{{ tempCurrPosts.title}}</li>
-                    <li class="list-group-item"><b>text: </b>{{ tempCurrPosts.text}}</li>
+                    <li class="list-group-item"><b>timestamp:</b> {{ currentPosts.date}}</li>
+                    <li class="list-group-item"><b>author:</b> {{ currentPosts.author}}</li>
+                    <li class="list-group-item"><b>title: </b>{{ currentPosts.title}}</li>
+                    <li class="list-group-item"><b>text: </b>{{ currentPosts.text }}</li>
                   </ul>
                 </div>
 

@@ -16,16 +16,16 @@
     <div class="container-fluid">
       <div class="row">
 
-        <ng-container *ngFor="let tempDummyFollowers of dummyFollowers" class="col-md-3"><br><br>
+        <ng-container *ngFor="let dummyFollowersData of dummyFollowers" class="col-md-3"><br><br>
         <br>
             <div class="followers-box">
-              <img src="{{ tempDummyFollowers.image }}"  class="img-responsive">
+              <img src="{{ dummyFollowersData.image }}"  class="img-responsive">
               <br>
               <h5>follower name</h5>
-              <div class="text-black">{{ tempDummyFollowers.name}}</div>
+              <div class="text-black">{{ dummyFollowersData.name}}</div>
               <br>
               <h5>Status</h5>
-              <div class="text-black">{{ tempDummyFollowers.status}}</div>
+              <div class="text-black">{{ dummyFollowersData.status}}</div>
               <br>
               <button type="submit" class="btn btn-primary" id="remove-follers" value="Submit" (click)="removeFollowers(tempDummyFollowers.name)">Remove</button><br><br>
             </div>

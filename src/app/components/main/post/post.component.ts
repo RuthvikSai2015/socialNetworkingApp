@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { Router } from "@angular/router";
-import { Observable } from "rxjs";
-import { User } from "../../../common/user";
-import { timestamp } from "rxjs/operators";
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
@@ -152,23 +149,6 @@ export class PostComponent implements OnInit {
       }
     }
     this.tempPost = this.searchedPost;
-  }
-
-  newSearchText() {
-
-  }
-
-  showComments() {
-
-  }
-
-
-  editText() {
-
-  }
-
-  editTextHere() {
-
   }
 }
 

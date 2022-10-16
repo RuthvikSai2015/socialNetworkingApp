@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
-import { Follower } from "../../../common/follower";
+import { Follower } from "../../../model/follower";
 
 @Component({
   selector: 'app-follower',
@@ -37,10 +37,6 @@ export class FollowerComponent implements OnInit {
     }
 
   }
-  createFollowersHelper(i: number) {
-
-  }
-
   createFollowers() {
 
     var newF = (<HTMLInputElement>document.getElementById("newFollower")).value
@@ -55,9 +51,6 @@ export class FollowerComponent implements OnInit {
 
     }
     //  window.location.reload();
-  }
-
-  removeFollowersHelper(removeId: number) {
   }
 
   removeFollowers(removeName: string) {

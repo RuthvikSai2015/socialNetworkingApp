@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {Routes, RouterModule, Router} from '@angular/router';
+import { Routes, RouterModule, Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { MainComponent } from './components/main/main.component';
-import { RegisterationComponent } from './components/auth/registration/registration.component';
+import { RegistrationComponent } from './components/auth/registration/registration.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { HeaderComponent } from './components/main/header/header.component';
@@ -19,18 +19,18 @@ import { FollowerComponent } from './components/main/follower/follower.component
 
 const routes: Routes = [
 
-  {path: '', redirectTo: 'login', pathMatch: 'full'},
-  {path:"login",component:LoginComponent},
-  {path:"register",component:RegisterationComponent},
-  {path: "main", component: MainComponent},
-  {path: "profile", component: ProfileComponent},
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: "login", component: LoginComponent },
+  { path: "register", component: RegistrationComponent },
+  { path: "main", component: MainComponent },
+  { path: "profile", component: ProfileComponent },
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
-    RegisterationComponent,
+    RegistrationComponent,
     ProfileComponent,
     LoginComponent,
     HeaderComponent,

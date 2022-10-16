@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
-import { HeaderService } from "./header.service";
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
-  providers: [HeaderService]
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
   url: string;
@@ -16,8 +15,7 @@ export class HeaderComponent implements OnInit {
   imgUrl: any;
 
   constructor(private http: HttpClient,
-    private router: Router,
-    private hServ: HeaderService) {
+    private router: Router) {
     this.url = " ";  
   }
 
@@ -50,8 +48,6 @@ export class HeaderComponent implements OnInit {
   changeStatus() {
     if ((<HTMLInputElement>document.getElementById("userStatus")).value != "") {
       (<HTMLInputElement>document.getElementById("userStatus")).innerHTML = this.inputNewStatus;
-      this.http.put(this.url + 'headline', { "headline": this.inputNewStatus }, { withCredentials: true }).subscribe(res2 => {
-      })
     }
   }
 

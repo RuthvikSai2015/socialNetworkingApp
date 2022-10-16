@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router";
-import {HttpClient} from "@angular/common/http";
-import { NgForm } from '@angular/forms';
-
+import { Router } from "@angular/router";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: 'app-registeration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
-export class RegisterationComponent implements OnInit {
+export class RegistrationComponent implements OnInit {
   url: string
   nameCheck: any;
   emailCheck: any;
@@ -18,7 +16,7 @@ export class RegisterationComponent implements OnInit {
   zipCheck: any;
   passwordCheck: any;
   userName: string | undefined;
-  displayName : string | undefined
+  displayName: string | undefined
   emailId: string | undefined
   contactNumber: string | undefined
   dateOfBirth: string | undefined
@@ -29,22 +27,22 @@ export class RegisterationComponent implements OnInit {
   public dummyUser: any[] = [];
 
   constructor(private http: HttpClient,
-              private router: Router) {
+    private router: Router) {
     this.nameCheck = "";
     this.emailCheck = "";
     this.birthCheck = "";
     this.zipCheck = "";
     this.phoneCheck = "";
-    this.passwordCheck="";
-    this.url = "";   
-    this.successMessage="";
+    this.passwordCheck = "";
+    this.url = "";
+    this.successMessage = "";
   }
 
   ngOnInit(): void {
   }
 
   onSubmit() {
-    var namePattern =  new RegExp("^[A-Za-z]\\w{3,29}$");
+    var namePattern = new RegExp("^[A-Za-z]\\w{3,29}$");
     var emailPattern = new RegExp(".@.")
     var zipPattern = new RegExp("[0-9]{5}")
     var phonePattern = new RegExp("[0-9]{3}-[0-9]{3}-[0-9]{4}")
@@ -61,10 +59,10 @@ export class RegisterationComponent implements OnInit {
     var dobday = parseInt(ymd[2], 10);
     var userDob = new Date();
     userDob.setFullYear(dobyear, dobmonth - 1, dobday);
-   if(typeof this.dateOfBirth === "string"){
-    this.birthCheck = "Please enter Date of Birth";
-   }
-      
+    if (typeof this.dateOfBirth === "string") {
+      this.birthCheck = "Please enter Date of Birth";
+    }
+
     if (userDob.getTime() > now) {
       this.birthCheck = "User must older than 18 years old";
     }
@@ -101,7 +99,7 @@ export class RegisterationComponent implements OnInit {
     if ((<HTMLInputElement>document.getElementById("password")).value.length == 0)
       this.passwordCheck = "The password cannot be empty";
     else if (this.Password == this.confirmPassword)
-      this.passwordCheck="";
+      this.passwordCheck = "";
     else
       this.passwordCheck = "Passwords do not match!";
     if (this.birthCheck == "" &&
@@ -109,18 +107,18 @@ export class RegisterationComponent implements OnInit {
       this.emailCheck == "" &&
       this.zipCheck == "" &&
       this.phoneCheck == "" &&
-      this.passwordCheck=="") {
+      this.passwordCheck == "") {
       var userInfoKey = "user:" + this.userName + ":" + this.Password;
-     
-      this.successMessage="User Added Succesfully!";
-      localStorage.setItem('userName',<string>this.userName);
-      localStorage.setItem('userId',<string>"newUser");
-      localStorage.setItem('dateOfBirth',<string>this.dateOfBirth);
-      localStorage.setItem('phone',<string>this.contactNumber);
-      localStorage.setItem('zipCode',<string>this.zipCode);
-      localStorage.setItem('displayName',<string>this.displayName);
-      localStorage.setItem('password',<string>this.Password);
-      localStorage.setItem('email',<string>this.emailId);
+
+      this.successMessage = "User Added Succesfully!";
+      localStorage.setItem('userName', <string>this.userName);
+      localStorage.setItem('userId', <string>"newUser");
+      localStorage.setItem('dateOfBirth', <string>this.dateOfBirth);
+      localStorage.setItem('phone', <string>this.contactNumber);
+      localStorage.setItem('zipCode', <string>this.zipCode);
+      localStorage.setItem('displayName', <string>this.displayName);
+      localStorage.setItem('password', <string>this.Password);
+      localStorage.setItem('email', <string>this.emailId);
     }
   }
 }
