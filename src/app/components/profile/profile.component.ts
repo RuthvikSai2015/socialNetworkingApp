@@ -46,7 +46,9 @@ export class ProfileComponent implements OnInit {
     this.displayNameForm = "";
   }
   ngOnInit(): void {
-    this.imgUrl = "https://m.media-amazon.com/images/I/71zIISn3b5S._SX425_.jpg";
+    if (localStorage.getItem("userId")?.toString() != <string>"newUser") {
+      this.imgUrl = "https://m.media-amazon.com/images/I/71zIISn3b5S._SX425_.jpg";
+    }
     this.userName = '';
     // @ts-ignore
     document.getElementById("userName").value = "";
