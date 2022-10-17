@@ -25,7 +25,7 @@
      <h5> <div *ngIf="loginFailInfo" class="alert alert-danger" id="loginFail">{{ loginFailInfo }}</div></h5>
     <button type="submit" id="submit" class="btn btn-dark btn-lg btn-block" (click)="onSubmit()">Sign in</button>
     <h5></h5><p class="forgot-password text-right">
-        Click <a id="registerTag" href="/register">here</a> for register
+        Click <a id="registerTag" (click)= "redirectRegister()" style="text-decoration-line: underline;">here</a> for register
     </p>
   </form>
 </div>

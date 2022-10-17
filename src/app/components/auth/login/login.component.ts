@@ -32,7 +32,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  redirectRegister(){
+    this.router.navigate(['register']);
+  }
   onSubmit() {
     if (!this.userName) {
       this.nameValid = "UserName cannot be empty";

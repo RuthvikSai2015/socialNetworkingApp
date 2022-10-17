@@ -185,7 +185,7 @@ export class ProfileComponent implements OnInit {
         localStorage.setItem('email', <string>this.emailId);
       }
       window.location.reload();
-      this.router.navigate(['profile']);
+     // this.router.navigate(['profile']);
     }
   }
 }

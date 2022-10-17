@@ -20,6 +20,7 @@
     "@angular/router": "^14.2.0",
     "bootstrap": "^4.6.2",
     "rxjs": "~7.5.0",
+    "surge": "^0.23.1",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
