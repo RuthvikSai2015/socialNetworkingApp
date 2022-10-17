@@ -40,7 +40,9 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  redirectToLogin(){
+    this.router.navigate(['login']);
+  }
   onSubmit() {
     var namePattern = new RegExp("^[A-Za-z]\\w{3,29}$");
     var emailPattern = new RegExp(".@.")
