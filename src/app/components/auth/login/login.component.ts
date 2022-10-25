@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { Router } from "@angular/router";
+import { RouterTestingModule } from '@angular/router/testing';
+import * as users from '../../../common/users.json';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +16,7 @@ export class LoginComponent implements OnInit {
   userName: any;
   passwordValid: string | undefined;
   loginFailInfo: any;
-  //public dummyUser: Observable<User[]>;
+  public response:  any[] = [];
   loginFlag: boolean;
 
   constructor(private http: HttpClient,
@@ -50,21 +52,22 @@ export class LoginComponent implements OnInit {
       this.passwordValid = "";
 
     if (this.nameValid == "" && this.passwordValid == "") {
-      this.http.get(this.url, { withCredentials: true }).subscribe(response => {
-        for (let data in response) {
+
+       this.response = users;
+       for (let data in this.response) {
+        // @ts-ignore
+        if (this.userName.trim() == this.response[data].username && this.userPassword == this.response[data]["address"].street) {
+          console.log("username match");
           // @ts-ignore
-          if (this.userName.trim() == response[data].username && this.userPassword == response[data]["address"].street) {
-            console.log("username match");
-            // @ts-ignore
-            localStorage.setItem("userId", response[data].id);
-            localStorage.setItem('userName', <string>this.userName);
-            localStorage.setItem('password', <string>this.userPassword);
-            this.loginFlag = true;
-            this.loginFailInfo ="";
-            this.router.navigate(['main']);
-          }
+          localStorage.setItem("userId", this.response[data].id);
+          localStorage.setItem('userName', <string>this.userName);
+          localStorage.setItem('password', <string>this.userPassword);
+          this.loginFlag = true;
+          this.loginFailInfo ="";
+          this.router.navigate(['main']);
         }
-      })
+      }
+      
       if (this.userName.trim() == <string>localStorage.getItem("userName") && this.userPassword == <string>localStorage.getItem("password")) {
         console.log("newUser");
         this.loginFlag = true;

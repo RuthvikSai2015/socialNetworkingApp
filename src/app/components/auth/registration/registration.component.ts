@@ -110,8 +110,7 @@ export class RegistrationComponent implements OnInit {
       this.zipCheck == "" &&
       this.phoneCheck == "" &&
       this.passwordCheck == "") {
-      var userInfoKey = "user:" + this.userName + ":" + this.Password;
-
+    
       this.successMessage = "User Added Succesfully!";
       localStorage.setItem('userName', <string>this.userName);
       localStorage.setItem('userId', <string>"newUser");

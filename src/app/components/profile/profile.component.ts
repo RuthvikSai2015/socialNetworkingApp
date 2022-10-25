@@ -89,7 +89,7 @@ export class ProfileComponent implements OnInit {
   doRedirection() {
     this.router.navigate(['profile']);
   }
-  onSubmit2() {
+  onSubmitForm() {
     var namePattern = new RegExp("^[A-Za-z]\\w{3,29}$");
     var emailPattern = new RegExp(".@.")
     var zipPattern = new RegExp("[0-9]{5}")

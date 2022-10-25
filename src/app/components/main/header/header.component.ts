@@ -48,6 +48,7 @@ export class HeaderComponent implements OnInit {
   changeStatus() {
     if ((<HTMLInputElement>document.getElementById("userStatus")).value != "") {
       (<HTMLInputElement>document.getElementById("userStatus")).innerHTML = this.inputNewStatus;
+      localStorage.setItem("userHeadLine",<string>this.userHeadLine);
     }
   }
 
