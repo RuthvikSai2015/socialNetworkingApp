@@ -2,9 +2,9 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="author" content="Ruimin Li">
+  <meta name="author" content="Sara Nabiya">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Register Page</title>
+  <title>Registration Page</title>
 </head>
 
 <body class="reg-body">
@@ -13,18 +13,18 @@
     <hr>
     <div *ngIf="successMessage" class="alert alert-success" id="successMessage"><em>{{ successMessage }}</em></div>
     <div> <label class="floatlabel">User Name: </label><input class="form-control" type="text" id="userName"
-        name="userName" required [(ngModel)]="userName" placeholder="must begin with letter">
+        name="userName" required [(ngModel)]="userName" placeholder="">
       <div *ngIf="nameCheck" class="alert alert-danger" id="nameValidity">{{ nameCheck }}</div>
     </div>
     <div><label class="floatlabel">Display Name:</label>
       <input class="form-control" type="text" id="displayName" name="displayName"
-        [(ngModel)]="displayName" placeholder="optional">
+        [(ngModel)]="displayName" placeholder="">
     </div>
     <div>Email Address: <input class="form-control" type="text" id="emailId" name="emailId" required
         [(ngModel)]="emailId" placeholder="xxxxx@xxxxx.xxx">
       <div *ngIf="emailCheck" class="alert alert-danger" id="emailValidity">{{ emailCheck }}</div>
     </div>
-    <div>Contact Number: <input class="form-control" type="text" id="contactNumber" name="contactNumber" required
+    <div>Phone Number: <input class="form-control" type="text" id="contactNumber" name="contactNumber" required
         [(ngModel)]="contactNumber" placeholder="123-123-1234">
       <div *ngIf="phoneCheck" class="alert alert-danger" id="phoneValidity">{{ phoneCheck }}</div>
     </div>
@@ -33,7 +33,7 @@
       <div *ngIf="birthCheck" class="alert alert-danger" id="BirthValidity">{{ birthCheck }}</div>
     </div>
     <div>Zip Code: <input class="form-control" type="text" id="zipCode" name="zipCode" required [(ngModel)]="zipCode"
-        placeholder="enter five digits">
+        placeholder="Enter 5 digits">
       <div *ngIf="zipCheck" class="alert alert-danger" id="ZipValidity">{{ zipCheck }}</div>
     </div>
     <div>Password: <input class="form-control" type="password" id="password" name="password" required
@@ -50,7 +50,7 @@
     <button type="reset" class="btn btn-primary" value="Reset">Clear</button>
 
     <div class="forgot-password text-right">
-      Click <a id="registerTag" (click)="redirectToLogin()" style="text-decoration-line: underline;color:blue">here</a> for Login
+      Click <a id="registerTag" (click)="redirectToLogin()" style="text-decoration-line: underline;color:blue">HERE</a> to Login.
     </div>
 
   </form>

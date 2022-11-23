@@ -2,23 +2,23 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="author" content="Ruimin Li">
+  <meta name="author" content="Sara Nabiya">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login Page</title>
+  <title>Header</title>
   <link rel="shortcut icon" href="#">
 </head>
 
 <body class="app-header-body">
   <a  class="badge badge-primary"  id="submit-logout"  (click)="logOut()">Log Out</a>&nbsp;&nbsp;
   <a  class="badge badge-primary" id="submit-goProfile"  (click)="goToProfile()">Go to Profile</a><br><br>
-  <img id="userImg" src="{{ imgUrl }}" width="96%" height="50%" alt="No Profile Pic Available"/>
+  <img id="userImg" src="{{ imgUrl }}" width="96%" height="50%" alt="No Profile Picture"/>
   <br><p>User Name: <span id="userName" name="userName">{{ userName }}</span>
     <br>
     <span>Status: </span>
     <span id="userStatus">{{userHeadLine}}</span>
-  <p>new status: <input type="text" id="changeuserStatus" name="changeuserStatus" required [(ngModel)]="inputNewStatus" placeholder="New Status" >
+  <p>New Status: <input type="text" id="changeuserStatus" name="changeuserStatus" required [(ngModel)]="inputNewStatus" placeholder="" >
     <button type="submit" class="btn btn-primary" id="submit-status" value="Submit" (click)="changeStatus()">Update Status</button>
 
     <br><br>
-   <th width = "50%"><app-follower class="form"></app-follower></th> 
+   <th width = "50%"><app-follower class="form"></app-follower></th>
 </body>

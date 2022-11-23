@@ -29,6 +29,7 @@ export class ProfileComponent implements OnInit {
   dateOfBirthDisplay: any;
   contactNumberDisplay: any;
   userNameDisplay: any;
+  userNameDisplay2:any;
   zipDisplay: any;
   img: File | undefined;
   imgUrl: string | undefined;
@@ -53,10 +54,11 @@ export class ProfileComponent implements OnInit {
     // @ts-ignore
     document.getElementById("userName").value = "";
     this.userNameDisplay = localStorage.getItem('userName')?.toString();
+    this.userNameDisplay2 = localStorage.getItem('userName')?.toString();
     if (<string>localStorage.getItem('dateOfBirth')) {
       this.dateOfBirthDisplay = <string>localStorage.getItem('dateOfBirth');
     } else {
-      this.dateOfBirthDisplay = "01-01-1994";
+      this.dateOfBirthDisplay = "01-01-1990";
     }
     if (<string>localStorage.getItem(('phone'))) {
       this.contactNumberDisplay = <string>localStorage.getItem('phone');
@@ -66,21 +68,19 @@ export class ProfileComponent implements OnInit {
     if (<string>localStorage.getItem('zipCode')) {
       this.zipDisplay = <string>localStorage.getItem('zipCode');
     } else {
-      this.zipDisplay = "34567";
+      this.zipDisplay = "12345";
     }
     if (<string>localStorage?.getItem(('email'))) {
       this.email = <string>localStorage?.getItem(('email'));
     } else {
-      this.email = "sn_62@rice.edu";
+      this.email = "sara@rice.edu";
     }
     if (<string>localStorage?.getItem(('displayName'))) {
       this.displayNameForm = <string>localStorage.getItem('displayName');
     } else {
-      this.displayNameForm = "sn_62"
+      this.displayNameForm = "sn62"
     }
     //  this.Password = <string>localStorage?.getItem(('password'));
-
-
   }
 
   onSubmit() {
@@ -89,7 +89,7 @@ export class ProfileComponent implements OnInit {
   doRedirection() {
     this.router.navigate(['profile']);
   }
-  onSubmitForm() {
+  onSubmit2() {
     var namePattern = new RegExp("^[A-Za-z]\\w{3,29}$");
     var emailPattern = new RegExp(".@.")
     var zipPattern = new RegExp("[0-9]{5}")
@@ -108,11 +108,11 @@ export class ProfileComponent implements OnInit {
     var userDob = new Date();
     userDob.setFullYear(dobyear, dobmonth - 1, dobday);
     if (typeof this.dateOfBirth === "string") {
-      this.birthCheck = "Please enter Date of Birth";
+      this.birthCheck = "Please enter date of birth";
     }
 
     if (userDob.getTime() > now) {
-      this.birthCheck = "User must older than 18 years old";
+      this.birthCheck = "User must be older than 18 years!";
     }
     else {
       this.birthCheck = "";
@@ -121,7 +121,7 @@ export class ProfileComponent implements OnInit {
     if (this.userName && this.userName != '') {
       resultName = namePattern.test(this.userName);
       if (!resultName)
-        this.nameCheck = "Please enter a valid value that should not start with digit and min length is 6";
+        this.nameCheck = "Username must not start with a digit and cannot contain spaces!";
     }
 
 
@@ -170,7 +170,7 @@ export class ProfileComponent implements OnInit {
       this.zipCheck == "" &&
       this.phoneCheck == "" &&
       this.passwordCheck == "") {
-      this.successMessage = "User Details Updated Succesfully!";
+      this.successMessage = "User Details Updated Successfully!";
       if (this.userName) {
         localStorage.setItem('userName', <string>this.userName);
       }
@@ -193,7 +193,7 @@ export class ProfileComponent implements OnInit {
       if (<string>localStorage.getItem('dateOfBirth')) {
         this.dateOfBirthDisplay = <string>localStorage.getItem('dateOfBirth');
       } else {
-        this.dateOfBirthDisplay = "01-01-1994";
+        this.dateOfBirthDisplay = "01-01-1990";
       }
       if (<string>localStorage.getItem(('phone'))) {
         this.contactNumberDisplay = <string>localStorage.getItem('phone');
@@ -203,17 +203,17 @@ export class ProfileComponent implements OnInit {
       if (<string>localStorage.getItem('zipCode')) {
         this.zipDisplay = <string>localStorage.getItem('zipCode');
       } else {
-        this.zipDisplay = "34567";
+        this.zipDisplay = "12345";
       }
       if (<string>localStorage?.getItem(('email'))) {
         this.email = <string>localStorage?.getItem(('email'));
       } else {
-        this.email = "sn_62@rice.edu";
+        this.email = "sara@rice.edu";
       }
       if (<string>localStorage?.getItem(('displayName'))) {
         this.displayNameForm = <string>localStorage.getItem('displayName');
       } else {
-        this.displayNameForm = "sn_62"
+        this.displayNameForm = "sn62"
       }
     }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpResponse } from "@angular/common/http";
-import { Router } from "@angular/router";
+import { NavigationEnd, Router } from "@angular/router";
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-post',
@@ -9,16 +10,17 @@ import { Router } from "@angular/router";
 })
 export class PostComponent implements OnInit {
   url: string;
-  usersUrl : string;
+  usersUrl: string;
   inputNewPost: any;
   inputNewPost2: any;
   userObj: any;
   usersToQuery: any;
   imgUrl: any;
   author: any;
-  public dummyPost: any[] = [];  
+  public dummyPost: any[] = [];
   public tempPostForSearch: any[] = [];
-  public tempPost: any[] = []; 
+  public tempPost: any[] = [];
+  followers: any[] = [];
   public addedPost: any[] = [];
   public searchedPost: any[] = [];
   inputSearch: any;
@@ -27,16 +29,28 @@ export class PostComponent implements OnInit {
   inputNewTextId: any;
   inputNewCommentId: any;
   inputNewComment2: any;
+  routerSubscription: any;
+
   constructor(private http: HttpClient,
     private router: Router,) {
+
     this.url = "https://jsonplaceholder.typicode.com/posts";
     this.usersUrl = "https://jsonplaceholder.typicode.com/users";
     this.userObj = "";
     this.usersToQuery = [];
     this.author = [];
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+    this.routerSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+
+        this.router.navigated = false;
+      }
+    });
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.userObj = "sara";
     this.author = [
       {
@@ -80,44 +94,128 @@ export class PostComponent implements OnInit {
         "name": "Clementina DuBuque"
       }
     ];
-    let i = 1;
-    let authorData="";
-    this.http.get(this.url, { withCredentials: true }).subscribe(response => {
-      for (let data in response) {
-        // @ts-ignore
-        console.log(response.userId);
-        // @ts-ignore
-        if (localStorage.getItem("userId") == response[data].userId) {
-           // @ts-ignore
-          authorData = this.getUserName(i);
-          this.tempPost.push({
-            url: `../assets/images/image${i}.png`,
-            // @ts-ignore
-            author: authorData,
-            // @ts-ignore
-            title: response[data].title,
-            // @ts-ignore
-            text: response[data].body,
-            date: new Date(),
-          })
-          i++;
+
+    await this.getArticles();
+  }
+  ngOnDestroy() {
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
+  }
+  async getArticles() {
+
+    this.tempPost = [];
+    this.followers = [];
+    let _posts = [];
+    let currentUserId = localStorage.getItem("userId");
+    let currentUserName = localStorage.getItem("userName");
+
+    let responseC$ = this.http.get(this.url, { withCredentials: true });
+    let responseC: any = await lastValueFrom(responseC$);
+    for (let p in responseC) {
+      if (currentUserId == responseC[p].userId)
+        _posts.push(responseC[p]);
+
+    }
+
+
+    for (let po = 0; po < _posts.length; po++) {
+
+      let postId = _posts[po].id;
+      let commentsC$ = this.http.get(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`, { withCredentials: true });
+      let commentsC: any = await lastValueFrom(commentsC$);
+      let _comments = [];
+      let k = 0;
+      for (let c in commentsC) {
+        if (k > 1)
+          break;
+        _comments.push({ email: commentsC[c].email, text: commentsC[c].name });
+        k++;
+      }
+
+      this.tempPost.push(
+        {
+          userId: _posts[po].userId,
+          id: _posts[po].id,
+          url: `../assets/images/image${1}.png`,
+          author: currentUserName,
+          title: _posts[po].title,
+          text: _posts[po].body,
+          date: new Date(),
+          comments: _comments
+        });
+
+    }
+    if (localStorage.getItem("Followers")) {
+      let tmpfollowers = JSON.parse(localStorage.getItem("Followers")!);
+      for (let f in tmpfollowers) {
+        if (tmpfollowers[f] !== null) {
+          this.followers.push({
+            id: tmpfollowers[f].id,
+            image: tmpfollowers[f].image,
+            name: tmpfollowers[f].name,
+            status: tmpfollowers[f].status
+          });
         }
       }
-    })
+    }
+    _posts = [];
+    for (let i = 0; i < this.followers.length; i++) {
+
+      let response$ = this.http.get(this.url, { withCredentials: true });
+      let response: any = await lastValueFrom(response$);
+
+      for (let p in response) {
+        if (this.followers[i].id == response[p].userId)
+
+        _posts.push(response[p]);
+
+      }
+
+
+      for (let po = 0; po < _posts.length; po++) {
+
+        let postId = _posts[po].id;
+        let commentsC$ = this.http.get(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`, { withCredentials: true });
+        let commentsC: any = await lastValueFrom(commentsC$);
+        let _comments = [];
+        let k = 0;
+        for (let c in commentsC) {
+          if (k > 1)
+            break;
+          _comments.push({ email: commentsC[c].email, text: commentsC[c].name });
+          k++;
+        }
+        let authorName = this.followers[i].name;
+        this.tempPost.push(
+          {
+            userId: _posts[po].userId,
+            id: _posts[po].id,
+            url: '',
+            author: authorName,
+            title: _posts[po].title,
+            text: _posts[po].body,
+            date: new Date(),
+            comments: _comments
+          });
+
+      }
+
+    }
 
   }
   getUserName(id: any) {
     console.log(id);
     let userFirstName = "";
-    for(let newData in this.author){
-       // @ts-ignore
-      if(id == this.author[newData].id){
-         // @ts-ignore
-        userFirstName= this.author[newData].name;
+    for (let newData in this.author) {
+      // @ts-ignore
+      if (id == this.author[newData].id) {
+        // @ts-ignore
+        userFirstName = this.author[newData].name;
       }
     }
-    if(userFirstName == ""){
-      userFirstName="Sample Author"
+    if (userFirstName == "") {
+      userFirstName = "Sample Author"
     }
     return userFirstName;
   }
@@ -131,11 +229,11 @@ export class PostComponent implements OnInit {
   }
   newPost() {
     this.tempPost.push({
-      url: `../assets/images/image4.png`,
+      url: '',
       // @ts-ignore
       author: localStorage.getItem("userName"),
       // @ts-ignore
-      title: "New Title",
+      title: "Sample Title",
       // @ts-ignore
       text: this.inputNewPost,
       date: new Date(),

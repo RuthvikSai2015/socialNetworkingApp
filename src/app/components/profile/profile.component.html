@@ -2,7 +2,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="author" content="Ruimin Li">
+  <meta name="author" content="Sara Nabiya">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Profile Page</title>
 </head>
@@ -12,8 +12,7 @@
 <body>
   <router-outlet></router-outlet>
   <div>
-    <button type="submit" class="btn btn-primary" id="submit-goMain" value="Submit" (click)="onSubmit()">Main
-      Page</button>
+    <button type="submit" class="btn btn-primary" id="submit-goMain" value="Submit" (click)="onSubmit()">Main Page</button>
     <br>
     <br>
 
@@ -26,7 +25,7 @@
               <tr>
                 <th width="50%">
 
-                  <div>User Information:
+                  <div>Profile Picture:
                     <br>
                     <br>
                     <img id="userImg" src="{{ imgUrl }}" width="300" height="300" />
@@ -37,14 +36,14 @@
                     </p>
 
                     <br>
-                    <h3>Current Information</h3>
+                    <h3>Existing Details:</h3>
                     <p>User Name: <span id="userNameDisplay" name="userNameDisplay">{{ userNameDisplay }}</span>
-                    <p>Password: <span id="passWord" name="passWord" type="password">********</span>
-                    <p>Phone: <span id="phone" name="phone">{{contactNumberDisplay}}</span>
-                    <p>Email: <span id="email" name="email">{{email}}</span>
-                    <p>zip: <span id="zip" name="zip">{{zipDisplay}}</span>
-                    <p>display name: <span id="displayNameForm" name="displayNameForm">{{displayNameForm}}</span>
-                    <p>DOB: <span id="DOB" name="DOB">{{dateOfBirthDisplay}}</span>
+                    <p>Display Name: <span id="displayNameForm" name="displayNameForm">{{displayNameForm}}</span>
+                    <p>Password: <span id="password2" name="password2" type="password">********</span>
+                    <p>Email Address: <span id="email" name="email">{{email}}</span>
+                    <p>Phone Number: <span id="phone" name="phone">{{contactNumberDisplay}}</span>
+                    <p>Date of Birth: <span id="DOB" name="DOB">{{dateOfBirthDisplay}}</span>
+                    <p>Zip Code: <span id="zip" name="zip">{{zipDisplay}}</span>
                       <br>
                       <br>
                   </div>
@@ -53,21 +52,21 @@
                     <form id="updateDetailsForm">
                       <h3>Edit Profile</h3>
                       <br>
-                      <div *ngIf="successMessage" class="alert alert-success" id="successMessage"><em>{{ successMessage }}</em></div>
+                      <div *ngIf="successMessage" class="alert alert-success" id="successMessage"><em>{{ successMessage
+                          }}</em></div>
                       <div> <label class="floatlabel">User Name: </label><input class="form-control" type="text"
-                          id="userName" name="userName" required [(ngModel)]="userName"
-                          placeholder="must begin with letter">
+                       id="userName" name="userName" required [(ngModel)]="userName" placeholder="User Name cannot be updated." readonly>
                         <div *ngIf="nameCheck" class="alert alert-danger" id="nameValidity">{{ nameCheck }}</div>
                       </div>
                       <div><label class="floatlabel">Display Name:</label>
                         <input class="form-control" type="text" id="displayName" name="displayName"
-                          [(ngModel)]="displayName" placeholder="optional">
+                          [(ngModel)]="displayName" placeholder="">
                       </div>
                       <div>Email Address: <input class="form-control" type="text" id="emailId" name="emailId" required
                           [(ngModel)]="emailId" placeholder="xxxxx@xxxxx.xxx">
                         <div *ngIf="emailCheck" class="alert alert-danger" id="emailValidity">{{ emailCheck }}</div>
                       </div>
-                      <div>Contact Number: <input class="form-control" type="text" id="contactNumber"
+                      <div>Phone Number: <input class="form-control" type="text" id="contactNumber"
                           name="contactNumber" required [(ngModel)]="contactNumber" placeholder="123-123-1234">
                         <div *ngIf="phoneCheck" class="alert alert-danger" id="phoneValidity">{{ phoneCheck }}</div>
                       </div>
@@ -76,7 +75,7 @@
                         <div *ngIf="birthCheck" class="alert alert-danger" id="BirthValidity">{{ birthCheck }}</div>
                       </div>
                       <div>Zip Code: <input class="form-control" type="text" id="zipCode" name="zipCode" required
-                          [(ngModel)]="zipCode" placeholder="enter five digits">
+                          [(ngModel)]="zipCode" placeholder="Enter 5 digits">
                         <div *ngIf="zipCheck" class="alert alert-danger" id="ZipValidity">{{ zipCheck }}</div>
                       </div>
                       <div>Password: <input class="form-control" type="password" id="password" name="password" required
@@ -90,10 +89,8 @@
                       <br><br>
 
                       <button type="submit" class="btn btn-primary" id="submit-login" value="Submit"
-                        (click)="onSubmitForm()">Submit</button>&nbsp;&nbsp;
+                        (click)="onSubmit2()">Update</button>&nbsp;&nbsp;
                       <button type="reset" class="btn btn-primary" value="Reset">Clear</button>
-
-
 
                     </form>
                   </div>
@@ -102,10 +99,5 @@
           </div>
         </div>
       </div>
-
-
-
-
     </body>
-
   </div>

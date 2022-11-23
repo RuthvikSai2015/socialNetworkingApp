@@ -16,12 +16,12 @@ export class HeaderComponent implements OnInit {
 
   constructor(private http: HttpClient,
     private router: Router) {
-    this.url = " ";  
+    this.url = " ";
   }
 
   ngOnInit(): void {
     this.userName = localStorage.getItem('userName')?.toString();;
-    this.userHeadLine = "headline";
+    this.userHeadLine = "Online";
     // @ts-ignore
     if(localStorage.getItem("userId")?.toString() != <string>"newUser"){
     this.imgUrl = "https://m.media-amazon.com/images/I/71zIISn3b5S._SX425_.jpg";
@@ -48,7 +48,6 @@ export class HeaderComponent implements OnInit {
   changeStatus() {
     if ((<HTMLInputElement>document.getElementById("userStatus")).value != "") {
       (<HTMLInputElement>document.getElementById("userStatus")).innerHTML = this.inputNewStatus;
-      localStorage.setItem("userHeadLine",<string>this.userHeadLine);
     }
   }
 

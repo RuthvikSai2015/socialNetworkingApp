@@ -2,39 +2,39 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="author" content="Ruimin Li">
+  <meta name="author" content="Sara Nabiya">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Followers</title>
+  <title>Followed Users</title>
 </head>
 
 
 
 <body>
-<h3>Following</h3> <br>
+<h3>Following:</h3> <br>
 <div class="main-content">
   <div class="section-content section-content-p30">
     <div class="container-fluid">
       <div class="row">
 
-        <ng-container *ngFor="let dummyFollowersData of dummyFollowers" class="col-md-3"><br><br>
+        <ng-container *ngFor="let dummyFollowersData of followers" class="col-md-3"><br><br>
         <br>
             <div class="followers-box">
               <img src="{{ dummyFollowersData.image }}"  class="img-responsive">
               <br>
-              <h5>follower name</h5>
+              <h5>Name</h5>
               <div class="text-black">{{ dummyFollowersData.name}}</div>
               <br>
               <h5>Status</h5>
               <div class="text-black">{{ dummyFollowersData.status}}</div>
               <br>
-              <button type="submit" class="btn btn-primary" id="remove-follers" value="Submit" (click)="removeFollowers(tempDummyFollowers.name)">Remove</button><br><br>
+              <button type="submit" class="btn btn-primary" id="remove-follers" value="Submit" (click)="removeFollowers(dummyFollowersData.id)">Unfollow</button><br><br>
             </div>
           <br>
         </ng-container>
         <br>
         <br>
-        <p>New Follower Username: <input type="text" id="newFollower" name="newFollower" required [(ngModel)]="inputName" >&nbsp;&nbsp;
-          <button type="submit" class="btn btn-primary" id="submit-addFollower" value="Submit" (click)="createFollowers()">Add</button><br><br>
+        <p>Follow another user: <input type="text" id="newFollower" name="newFollower" required [(ngModel)]="inputName" >&nbsp;&nbsp;
+          <button type="submit" class="btn btn-primary" id="submit-addFollower" value="Submit" (click)="addFollower()">Follow</button><br><br>
           <span id="nameValidity">{{ nameCheck }}</span>
 
         </div>

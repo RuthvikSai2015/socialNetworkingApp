@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { Router } from "@angular/router";
-import { RouterTestingModule } from '@angular/router/testing';
-import * as users from '../../../common/users.json';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +15,7 @@ export class LoginComponent implements OnInit {
   userName: any;
   passwordValid: string | undefined;
   loginFailInfo: any;
-  public response:  any[] = [];
+  //public dummyUser: Observable<User[]>;
   loginFlag: boolean;
 
   constructor(private http: HttpClient,
@@ -34,12 +33,12 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  redirectRegister(){
+  redirectRegister() {
     this.router.navigate(['register']);
   }
-  onSubmit() {
+  async onSubmit() {
     if (!this.userName) {
-      this.nameValid = "UserName cannot be empty";
+      this.nameValid = "Username cannot be empty";
       return;
     }
     else
@@ -51,33 +50,62 @@ export class LoginComponent implements OnInit {
     else
       this.passwordValid = "";
 
+   await this.validateUser();
+    debugger;
+    if (this.loginFlag == true) {
+      this.router.navigate(['main']);
+    }
+    if (this.userName.trim() == <string>localStorage.getItem("userName") && this.userPassword == <string>localStorage.getItem("password")) {
+      console.log("newUser");
+      this.loginFlag = true;
+      this.loginFailInfo = "";
+      this.router.navigate(['main']);
+    }
+    if (!this.loginFlag) {
+      this.loginFailInfo = "The user does not exist! Please register and try again!";
+    }
+  }
+
+
+  async validateUser() {
+    let resp:boolean = false;
     if (this.nameValid == "" && this.passwordValid == "") {
 
-       this.response = users;
-       for (let data in this.response) {
-        // @ts-ignore
-        if (this.userName.trim() == this.response[data].username && this.userPassword == this.response[data]["address"].street) {
+      let response$ = this.http.get(this.url, { withCredentials: true });
+      let response:any = await lastValueFrom(response$);
+      for(let data in response)
+      {
+        if (this.userName.trim() == response[data].username && this.userPassword == response[data]["address"].street && resp == false) {
           console.log("username match");
-          // @ts-ignore
-          localStorage.setItem("userId", this.response[data].id);
+          localStorage.setItem("userId", response[data].id);
           localStorage.setItem('userName', <string>this.userName);
           localStorage.setItem('password', <string>this.userPassword);
           this.loginFlag = true;
-          this.loginFailInfo ="";
-          this.router.navigate(['main']);
+          this.loginFailInfo = "";
+          resp = true;
+          break;
+          //return resp;
+
         }
       }
-      
-      if (this.userName.trim() == <string>localStorage.getItem("userName") && this.userPassword == <string>localStorage.getItem("password")) {
-        console.log("newUser");
-        this.loginFlag = true;
-        this.loginFailInfo ="";
-        this.router.navigate(['main']);
-      }
-      if(!this.loginFlag){
-        this.loginFailInfo = "The input data do not match to our user database, try again!";
-      }
+
+      // this.http.get(this.url, { withCredentials: true }).subscribe(response => {
+      //   for (let data in response) {
+      //     // @ts-ignore
+      //     if (this.userName.trim() == response[data].username && this.userPassword == response[data]["address"].street) {
+      //       console.log("username match");
+      //       // @ts-ignore
+      //       localStorage.setItem("userId", response[data].id);
+      //       localStorage.setItem('userName', <string>this.userName);
+      //       localStorage.setItem('password', <string>this.userPassword);
+      //       this.loginFlag = true;
+      //       this.loginFailInfo = "";
+
+      //     }
+      //   }
+      // });
     }
- 
+    console.log("Resp:",resp);
+    return resp;
   }
 }

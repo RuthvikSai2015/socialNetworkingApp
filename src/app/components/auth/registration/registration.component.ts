@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-registeration',
@@ -8,13 +9,14 @@ import { HttpClient } from "@angular/common/http";
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-  url: string
-  nameCheck: any;
-  emailCheck: any;
-  phoneCheck: any;
-  birthCheck: any;
-  zipCheck: any;
-  passwordCheck: any;
+  url = "https://jsonplaceholder.typicode.com/users";
+
+  nameCheck: any = "";
+  emailCheck: any = "";
+  phoneCheck: any = "";
+  birthCheck: any = "";
+  zipCheck: any = "";
+  passwordCheck: any = "";
   userName: string | undefined;
   displayName: string | undefined
   emailId: string | undefined
@@ -23,103 +25,111 @@ export class RegistrationComponent implements OnInit {
   zipCode: string | undefined
   Password: string | undefined
   confirmPassword: string | undefined
-  successMessage: string | undefined
+  successMessage: string = "";
   public dummyUser: any[] = [];
 
   constructor(private http: HttpClient,
     private router: Router) {
-    this.nameCheck = "";
-    this.emailCheck = "";
-    this.birthCheck = "";
-    this.zipCheck = "";
-    this.phoneCheck = "";
-    this.passwordCheck = "";
-    this.url = "";
-    this.successMessage = "";
   }
 
   ngOnInit(): void {
   }
-  redirectToLogin(){
+  redirectToLogin() {
     this.router.navigate(['login']);
   }
-  onSubmit() {
-    var namePattern = new RegExp("^[A-Za-z]\\w{3,29}$");
-    var emailPattern = new RegExp(".@.")
-    var zipPattern = new RegExp("[0-9]{5}")
-    var phonePattern = new RegExp("[0-9]{3}-[0-9]{3}-[0-9]{4}")
-    var resultName;
-    var resultEmail;
-    var resultZIP;
-    var resultPhone;
-    var today = new Date();
-    var now = today.getTime();
-    var dob = document.getElementById("dateOfBirth");
-    var ymd = (<HTMLInputElement>dob).value.split("-");
-    var dobyear = parseInt(ymd[0]) + 18;
-    var dobmonth = parseInt(ymd[1], 10);
-    var dobday = parseInt(ymd[2], 10);
-    var userDob = new Date();
-    userDob.setFullYear(dobyear, dobmonth - 1, dobday);
-    if (typeof this.dateOfBirth === "string") {
-      this.birthCheck = "Please enter Date of Birth";
+  async onSubmit() {
+    debugger;
+    let response$ = this.http.get(this.url, { withCredentials: true });
+    let response: any = await lastValueFrom(response$);
+    for (let data in response) {
+      this.dummyUser.push(response[data].username);
     }
 
-    if (userDob.getTime() > now) {
-      this.birthCheck = "User must older than 18 years old";
-    }
-    else {
-      this.birthCheck = "";
-    }
-    if (typeof this.userName === "string")
-      resultName = namePattern.test(this.userName);
-    if (!resultName)
-      this.nameCheck = "Please enter a valid value that should not start with digit and min length is 6";
+    const found = this.dummyUser.find(x => { return x == this.userName });
+    if (found == undefined) {
 
-    if (this.userName && resultName)
-      this.nameCheck = "";
-    if (typeof this.emailId === "string")
-      resultEmail = emailPattern.test(this.emailId);
-    if (!resultEmail)
-      this.emailCheck = "Invalid Email Address! Enter a valid Email Address of the form xxxxx@xxxxx.xxx";
-    if (this.emailId && resultEmail)
-      this.emailCheck = "";
-    if (typeof this.zipCode === "string")
-      resultZIP = zipPattern.test(this.zipCode);
-    if (!resultZIP)
-      this.zipCheck = "Invalid Zipcode! Enter a 5-digit Zip Code.";
-    if ((<HTMLInputElement>document.getElementById("zipCode")).value.length != 5)
-      this.zipCheck = "Invalid Zipcode! Enter a 5-digit Zip Code.";
-    if (this.zipCode && resultZIP && this.zipCode.length == 5)
-      this.zipCheck = "";
-    if (typeof this.contactNumber === "string")
-      resultPhone = phonePattern.test(this.contactNumber);
-    if (!resultPhone)
-      this.phoneCheck = "Invalid Phone Number! Enter a 10 digit phone number in the form 123-123-1234";
-    if (this.contactNumber && resultPhone)
-      this.phoneCheck = "";
-    if ((<HTMLInputElement>document.getElementById("password")).value.length == 0)
-      this.passwordCheck = "The password cannot be empty";
-    else if (this.Password == this.confirmPassword)
-      this.passwordCheck = "";
-    else
-      this.passwordCheck = "Passwords do not match!";
-    if (this.birthCheck == "" &&
-      this.nameCheck == "" &&
-      this.emailCheck == "" &&
-      this.zipCheck == "" &&
-      this.phoneCheck == "" &&
-      this.passwordCheck == "") {
-    
-      this.successMessage = "User Added Succesfully!";
-      localStorage.setItem('userName', <string>this.userName);
-      localStorage.setItem('userId', <string>"newUser");
-      localStorage.setItem('dateOfBirth', <string>this.dateOfBirth);
-      localStorage.setItem('phone', <string>this.contactNumber);
-      localStorage.setItem('zipCode', <string>this.zipCode);
-      localStorage.setItem('displayName', <string>this.displayName);
-      localStorage.setItem('password', <string>this.Password);
-      localStorage.setItem('email', <string>this.emailId);
+
+      var namePattern = new RegExp("^[A-Za-z]\\w{3,29}$");
+      var emailPattern = new RegExp(".@.")
+      var zipPattern = new RegExp("[0-9]{5}")
+      var phonePattern = new RegExp("[0-9]{3}-[0-9]{3}-[0-9]{4}")
+      var resultName;
+      var resultEmail;
+      var resultZIP;
+      var resultPhone;
+      var today = new Date();
+      var now = today.getTime();
+      var dob = document.getElementById("dateOfBirth");
+      var ymd = (<HTMLInputElement>dob).value.split("-");
+      var dobyear = parseInt(ymd[0]) + 18;
+      var dobmonth = parseInt(ymd[1], 10);
+      var dobday = parseInt(ymd[2], 10);
+      var userDob = new Date();
+      userDob.setFullYear(dobyear, dobmonth - 1, dobday);
+      if (typeof this.dateOfBirth === "string") {
+        this.birthCheck = "Please enter date of birth!";
+      }
+
+      if (userDob.getTime() > now) {
+        this.birthCheck = "User must be older than 18 years!";
+      }
+      else {
+        this.birthCheck = "";
+      }
+      if (typeof this.userName === "string")
+        resultName = namePattern.test(this.userName);
+      if (!resultName)
+        this.nameCheck = "Username must not start with a digit and cannot contain spaces!";
+
+      if (this.userName && resultName)
+        this.nameCheck = "";
+      if (typeof this.emailId === "string")
+        resultEmail = emailPattern.test(this.emailId);
+      if (!resultEmail)
+        this.emailCheck = "Invalid Email Address! Enter a valid Email Address of the form xxxxx@xxxxx.xxx";
+      if (this.emailId && resultEmail)
+        this.emailCheck = "";
+      if (typeof this.zipCode === "string")
+        resultZIP = zipPattern.test(this.zipCode);
+      if (!resultZIP)
+        this.zipCheck = "Invalid Zipcode! Enter a 5-digit Zip Code.";
+      if ((<HTMLInputElement>document.getElementById("zipCode")).value.length != 5)
+        this.zipCheck = "Invalid Zipcode! Enter a 5-digit Zip Code.";
+      if (this.zipCode && resultZIP && this.zipCode.length == 5)
+        this.zipCheck = "";
+      if (typeof this.contactNumber === "string")
+        resultPhone = phonePattern.test(this.contactNumber);
+      if (!resultPhone)
+        this.phoneCheck = "Invalid Phone Number! Enter a 10 digit phone number in the form 123-123-1234";
+      if (this.contactNumber && resultPhone)
+        this.phoneCheck = "";
+      if ((<HTMLInputElement>document.getElementById("password")).value.length == 0)
+        this.passwordCheck = "The password cannot be empty";
+      else if (this.Password == this.confirmPassword)
+        this.passwordCheck = "";
+      else
+        this.passwordCheck = "Passwords do not match!";
+      if (this.birthCheck == "" &&
+        this.nameCheck == "" &&
+        this.emailCheck == "" &&
+        this.zipCheck == "" &&
+        this.phoneCheck == "" &&
+        this.passwordCheck == "") {
+        var userInfoKey = "user:" + this.userName + ":" + this.Password;
+
+        this.successMessage = "User added successfully! Please proceed to login using the link below.";
+        localStorage.setItem('userName', <string>this.userName);
+        localStorage.setItem('userId', <string>"newUser");
+        localStorage.setItem('dateOfBirth', <string>this.dateOfBirth);
+        localStorage.setItem('phone', <string>this.contactNumber);
+        localStorage.setItem('zipCode', <string>this.zipCode);
+        localStorage.setItem('displayName', <string>this.displayName);
+        localStorage.setItem('password', <string>this.Password);
+        localStorage.setItem('email', <string>this.emailId);
+      }
+    } else {
+      this.nameCheck = "Username already exists! Please use a different username!";
+      return;
     }
   }
 }
