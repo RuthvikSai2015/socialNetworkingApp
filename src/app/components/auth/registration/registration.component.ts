@@ -9,7 +9,7 @@ import { lastValueFrom } from 'rxjs';
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-  url = "https://jsonplaceholder.typicode.com/users";
+  url: string;
 
   nameCheck: any = "";
   emailCheck: any = "";
@@ -30,6 +30,7 @@ export class RegistrationComponent implements OnInit {
 
   constructor(private http: HttpClient,
     private router: Router) {
+    this.url = "http://localhost:3000/";
   }
 
   ngOnInit(): void {
@@ -115,17 +116,25 @@ export class RegistrationComponent implements OnInit {
         this.zipCheck == "" &&
         this.phoneCheck == "" &&
         this.passwordCheck == "") {
-        var userInfoKey = "user:" + this.userName + ":" + this.Password;
-
-        this.successMessage = "User added successfully! Please proceed to login using the link below.";
-        localStorage.setItem('userName', <string>this.userName);
-        localStorage.setItem('userId', <string>"newUser");
-        localStorage.setItem('dateOfBirth', <string>this.dateOfBirth);
-        localStorage.setItem('phone', <string>this.contactNumber);
-        localStorage.setItem('zipCode', <string>this.zipCode);
-        localStorage.setItem('displayName', <string>this.displayName);
-        localStorage.setItem('password', <string>this.Password);
-        localStorage.setItem('email', <string>this.emailId);
+        var registerData = {
+          "username": this.userName,
+          "email": this.emailId,
+          "dob": this.dateOfBirth,
+          "zipcode": this.zipCode,
+          "password": this.Password,
+          "displayName": this.displayName,
+          "phone": this.contactNumber
+        }
+        this.http.post(this.url + 'register', registerData, { withCredentials: true }).subscribe(response => {
+          // @ts-ignore
+          if (response["result"] === "success") {
+            this.successMessage = "User added successfully! Please proceed to login using the link below.";
+          }
+          // @ts-ignore
+          if (response["result"] === "Username already exist") {
+            this.nameCheck = "Username already exists! Please use a different username!";
+          }
+        })
       }
     } else {
       this.nameCheck = "Username already exists! Please use a different username!";

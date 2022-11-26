@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     this.passwordValid = "";
     // this.dummyUser = this.userService.getDummyUsers();
     this.loginFlag = false;
-    this.url = "https://jsonplaceholder.typicode.com/users";
+    this.url = "http://localhost:3000/";
   }
 
 
@@ -50,20 +50,24 @@ export class LoginComponent implements OnInit {
     else
       this.passwordValid = "";
 
-   await this.validateUser();
-    debugger;
-    if (this.loginFlag == true) {
-      this.router.navigate(['main']);
-    }
-    if (this.userName.trim() == <string>localStorage.getItem("userName") && this.userPassword == <string>localStorage.getItem("password")) {
-      console.log("newUser");
-      this.loginFlag = true;
-      this.loginFailInfo = "";
-      this.router.navigate(['main']);
-    }
-    if (!this.loginFlag) {
+      if (this.nameValid == "" && this.passwordValid == "") {
+
+        var  LoginForm = {
+          "username": this.userName,
+          "password": this.userPassword
+        }
+        localStorage.setItem("userLoginForm", JSON.stringify(LoginForm));
+        await this.http.post(this.url + 'login', LoginForm, { withCredentials: true}).subscribe(response => {
+          // @ts-ignore
+          if (response["result"] === "success") {
+            this.router.navigate(['main']);
+            this.loginFlag = true;
+            this.loginFailInfo = "";
+          }
+        })
+      }
+ 
       this.loginFailInfo = "The user does not exist! Please register and try again!";
-    }
   }
 
 
@@ -71,39 +75,20 @@ export class LoginComponent implements OnInit {
     let resp:boolean = false;
     if (this.nameValid == "" && this.passwordValid == "") {
 
-      let response$ = this.http.get(this.url, { withCredentials: true });
-      let response:any = await lastValueFrom(response$);
-      for(let data in response)
-      {
-        if (this.userName.trim() == response[data].username && this.userPassword == response[data]["address"].street && resp == false) {
+      var  LoginForm = {
+        "username": this.userName,
+        "password": this.userPassword
+      }
+      localStorage.setItem("userLoginForm", JSON.stringify(LoginForm));
+      this.http.post(this.url + '/login', LoginForm, { withCredentials: true}).subscribe(response => {
+        // @ts-ignore
+        if (response["result"] === "success") {
           console.log("username match");
-          localStorage.setItem("userId", response[data].id);
-          localStorage.setItem('userName', <string>this.userName);
-          localStorage.setItem('password', <string>this.userPassword);
           this.loginFlag = true;
           this.loginFailInfo = "";
           resp = true;
-          break;
-          //return resp;
-
         }
-      }
-
-      // this.http.get(this.url, { withCredentials: true }).subscribe(response => {
-      //   for (let data in response) {
-      //     // @ts-ignore
-      //     if (this.userName.trim() == response[data].username && this.userPassword == response[data]["address"].street) {
-      //       console.log("username match");
-      //       // @ts-ignore
-      //       localStorage.setItem("userId", response[data].id);
-      //       localStorage.setItem('userName', <string>this.userName);
-      //       localStorage.setItem('password', <string>this.userPassword);
-      //       this.loginFlag = true;
-      //       this.loginFailInfo = "";
-
-      //     }
-      //   }
-      // });
+      })
     }
     console.log("Resp:",resp);
     return resp;
