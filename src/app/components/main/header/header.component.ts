@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
+import { url } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -16,16 +17,22 @@ export class HeaderComponent implements OnInit {
 
   constructor(private http: HttpClient,
     private router: Router) {
-    this.url = " ";
+    this.url = url;
   }
 
   ngOnInit(): void {
-    this.userName = localStorage.getItem('userName')?.toString();;
-    this.userHeadLine = "Online";
-    // @ts-ignore
-    if(localStorage.getItem("userId")?.toString() != <string>"newUser"){
-    this.imgUrl = "https://m.media-amazon.com/images/I/71zIISn3b5S._SX425_.jpg";
-    }
+    this.http.get(this.url + 'username/', { withCredentials: true}).subscribe(res => {
+      // @ts-ignore
+      this.userName = res["username"];
+    })
+    this.http.get(this.url + 'headline', {withCredentials: true}).subscribe(res => {
+      // @ts-ignore
+      this.userHeadLine = res["headline"];
+    })
+    this.http.get(this.url + 'avatar/', { withCredentials: true}).subscribe(res => {
+      // @ts-ignore
+      this.imgUrl = res["avatar"];
+    })
 
   }
 
@@ -33,12 +40,16 @@ export class HeaderComponent implements OnInit {
     this.userName = "";
     this.inputNewStatus = "";
     this.userHeadLine = "";
-    localStorage.clear();
+    localStorage.removeItem("followers");
   }
   logOut() {
     this.logOutHelper();
-    this.router.navigate(['login']);
-
+    this.http.put(this.url + 'logout', {},{ withCredentials: true}).subscribe(res2 => {
+      // @ts-ignore
+      if (res2["result"] === "logout success") {
+        this.router.navigate(['auth']);
+      }
+    })
   }
 
   goToProfile() {
@@ -48,6 +59,8 @@ export class HeaderComponent implements OnInit {
   changeStatus() {
     if ((<HTMLInputElement>document.getElementById("userStatus")).value != "") {
       (<HTMLInputElement>document.getElementById("userStatus")).innerHTML = this.inputNewStatus;
+      this.http.put(this.url + 'headline', {"headline": this.inputNewStatus}, {withCredentials: true}).subscribe(res2 => {
+      })
     }
   }
 

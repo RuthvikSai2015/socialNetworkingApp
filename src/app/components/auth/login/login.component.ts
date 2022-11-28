@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { Router } from "@angular/router";
-import { lastValueFrom } from 'rxjs';
+import { url } from '../../../../environments/environment'
 
 @Component({
   selector: 'app-login',
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     this.passwordValid = "";
     // this.dummyUser = this.userService.getDummyUsers();
     this.loginFlag = false;
-    this.url = "http://localhost:3000/";
+    this.url = url;
   }
 
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import { lastValueFrom } from 'rxjs';
+import {url} from '../../../../environments/environment'
 
 @Component({
   selector: 'app-registeration',
@@ -30,7 +31,7 @@ export class RegistrationComponent implements OnInit {
 
   constructor(private http: HttpClient,
     private router: Router) {
-    this.url = "http://localhost:3000/";
+    this.url = url;
   }
 
   ngOnInit(): void {
