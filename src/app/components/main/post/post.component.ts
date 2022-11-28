@@ -52,12 +52,30 @@ export class PostComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.http.get(this.url + 'username/', { withCredentials: true}).subscribe(res => {
+        this.pageData();
+     
+    }
+  async pageData(){
+    this.http.get(this.url + 'username/', { withCredentials: true}).subscribe(response => {
       // @ts-ignore
-      this.userObj = res["username"];
-      this.http.get(this.url + 'articles/'+this.userObj, {withCredentials: true}).subscribe(res => {
+      this.userObj = response["username"];
+
+      this.http.get(this.url + 'articles/', {withCredentials: true}).subscribe(articleResponse => {
         // @ts-ignore
-          this.tempPost = res[0]["articles"]
+          this.tempPost = articleResponse["posts"];
+          this.http.get(this.url + 'following', {withCredentials: true}).subscribe(followResponse => {
+            // @ts-ignore
+            let names = followResponse.followers;
+            //@ts-ignore
+            names.forEach((value) => {
+              this.http.get(this.url + 'articles/' + value, {withCredentials: true}).subscribe(followers => {
+                  // @ts-ignore
+                  followers[0]["articles"].forEach((records) => {
+                    this.tempPost.push(records);
+                  })             
+                })
+              })
+            })
         })
       })
   }
@@ -82,14 +100,18 @@ export class PostComponent implements OnInit {
     }
     return userFirstName;
   }
-  uploadImage() {
-    // @ts-ignore
-    let file = (<HTMLInputElement>document.getElementById("newImage")).files[0];
-    if (file) {
-      const fd = new FormData();
-      fd.append('image', file);
+    uploadImage() {
+      // @ts-ignore
+      let file = (<HTMLInputElement>document.getElementById("newImage")).files[0];
+      if(file){
+        const fd = new FormData();
+        fd.append('image', file);
+        this.http.put(this.url+'url', fd, { withCredentials: true }).subscribe(res => {
+          // @ts-ignore
+          this.imgUrl = res["url"];
+        })
+      }
     }
-  }
   newPost() {
     this.http.get(this.url + 'username/', { withCredentials: true}).subscribe(res => {
       // @ts-ignore
@@ -137,6 +159,23 @@ export class PostComponent implements OnInit {
       }
     }
     this.tempPost = this.searchedPost;
+  }
+  editText(currentPosts:[]){
+    console.log(currentPosts);
+    // @ts-ignore
+    this.http.put(this.url + 'articles/' + currentPosts._id, {"text": <HTMLInputElement>document.getElementById(currentPosts._id+"editT").value}, { withCredentials: true}).subscribe(res => {
+      this.pageData();
+    })
+
+  }
+  editComment(currentPosts:[]){
+    // @ts-ignore
+    console.log(currentPosts._id);
+    // @ts-ignore
+    this.http.put(this.url + 'comment/' + currentPosts._id, {"text": <HTMLInputElement>document.getElementById(currentPosts._id+"editC").value}, { withCredentials: true}).subscribe(res => {
+      this.pageData();
+    })
+    // window.location.reload();
   }
 }
 

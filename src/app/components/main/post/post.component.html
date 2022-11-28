@@ -55,14 +55,14 @@
                   </ul>
                 </div>
 
-                <input type="text" id="editComment" name="editComment" required [(ngModel)]="inputNewComment"
-                  placeholder="Edit Comment">&nbsp;&nbsp;
-                <button type="submit" style="width:54%;font-size:10px" class="btn btn-primary" id="submit-comment"
+                <input class="form-control" type="text" id="{{currentPosts._id}}editT" name="editText" required
+                  placeholder="Edit Text">&nbsp;&nbsp;
+                <button type="submit" style="width:54%;font-size:10px" class="btn btn-primary" (click)="editText(currentPosts)" id="submit-comment"
                   value="Submit">Edit</button>
-                <input type="text" id="editComment" name="editComment" required [(ngModel)]="inputNewComment"
+                <input class="form-control" type="text" id="{{currentPosts._id}}editC" name="editComment" required
                   placeholder="New Comment">&nbsp;&nbsp;
                 <button type="submit" style="width:54%;font-size:10px" class="btn btn-primary" id="submit-comment"
-                  value="Submit">Comment</button>
+                  value="Submit" (click)="editComment(currentPosts)">Comment</button>
 
               </div>
 
