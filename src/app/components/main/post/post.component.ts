@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { NavigationEnd, Router } from "@angular/router";
 import { lastValueFrom } from 'rxjs';
-import {url} from '../../../../environments/environment' 
+import { url } from '../../../../environments/environment'
 
 @Component({
   selector: 'app-post',
@@ -52,32 +52,31 @@ export class PostComponent implements OnInit {
   }
 
   async ngOnInit() {
-        this.pageData();
-     
-    }
-  async pageData(){
-    this.http.get(this.url + 'username/', { withCredentials: true}).subscribe(response => {
-      // @ts-ignore
-      this.userObj = response["username"];
+    this.pageData();
 
-      this.http.get(this.url + 'articles/', {withCredentials: true}).subscribe(articleResponse => {
+  }
+ pageData() {
+    
+      // @ts-ignore
+   
+       this.http.get(this.url + 'articles/', { withCredentials: true }).subscribe(articleResponse => {
         // @ts-ignore
-          this.tempPost = articleResponse["posts"];
-          this.http.get(this.url + 'following', {withCredentials: true}).subscribe(followResponse => {
-            // @ts-ignore
-            let names = followResponse.followers;
-            //@ts-ignore
-            names.forEach((value) => {
-              this.http.get(this.url + 'articles/' + value, {withCredentials: true}).subscribe(followers => {
-                  // @ts-ignore
-                  followers[0]["articles"].forEach((records) => {
-                    this.tempPost.push(records);
-                  })             
-                })
+        this.tempPost = articleResponse["posts"];
+        this.http.get(this.url + 'following', { withCredentials: true }).subscribe(followResponse => {
+          // @ts-ignore
+          let names = followResponse.followers;
+          //@ts-ignore
+          names.forEach((value) => {
+            this.http.get(this.url + 'articles/' + value, { withCredentials: true }).subscribe(followers => {
+              // @ts-ignore
+              followers[0]["articles"].forEach((records) => {
+                this.tempPost.push(records);
               })
             })
+          })
         })
       })
+    
   }
   ngOnDestroy() {
     if (this.routerSubscription) {
@@ -100,44 +99,45 @@ export class PostComponent implements OnInit {
     }
     return userFirstName;
   }
-    uploadImage() {
-      // @ts-ignore
-      let file = (<HTMLInputElement>document.getElementById("newImage")).files[0];
-      if(file){
-        const fd = new FormData();
-        fd.append('image', file);
-        this.http.put(this.url+'url', fd, { withCredentials: true }).subscribe(res => {
-          // @ts-ignore
-          this.imgUrl = res["url"];
-        })
-      }
+  uploadImage() {
+    // @ts-ignore
+    let file = (<HTMLInputElement>document.getElementById("newImage")).files[0];
+    if (file) {
+      const fd = new FormData();
+      fd.append('image', file);
+      this.http.put(this.url + 'url', fd, { withCredentials: true }).subscribe(res => {
+        // @ts-ignore
+        this.imgUrl = res["url"];
+      })
     }
-  newPost() {
-    this.http.get(this.url + 'username/', { withCredentials: true}).subscribe(res => {
+  }
+   newPost() {
+    this.uploadImage();
+    this.http.get(this.url + 'username', { withCredentials: true }).subscribe(res => {
       // @ts-ignore
       var currUser = res["username"];
       var data5 = {
         "url": this.imgUrl,
         "author": currUser,
-        "date": "12/27/2021:12:00:34",
+        "date": "12/27/2022:12:00:34",
         "title": "new post",
-        "text":  this.inputNewPost
+        "text": this.inputNewPost
       }
-      this.http.post(this.url + 'article', data5, { withCredentials: true}).subscribe(res2 => {
+      this.http.post(this.url + 'article', data5, { withCredentials: true }).subscribe(res2 => {
         // @ts-ignore
         var len = res2["articles"].length - 1;
         data5 = {
           "url": this.imgUrl,
           "author": currUser,
-          "date": "12/27/2021:12:00:34",
+          "date": "12/27/2022:12:00:34",
           "title": "new post",
-          "text":  this.inputNewPost,
+          "text": this.inputNewPost,
           // @ts-ignore
           "_id": res2["articles"][len]._id
         }
         this.tempPost.unshift(data5);
         this.addedPost.push(data5);
-        this.inputNewPost="";
+        this.inputNewPost = "";
       })
 
     })
@@ -157,22 +157,29 @@ export class PostComponent implements OnInit {
       if (tempPostSwap[i].author.includes(this.inputSearch) || tempPostSwap[i].text.includes(this.inputSearch)) {
         this.searchedPost.push(tempPostSwap[i]);
       }
+      // @ts-ignore
+      tempPostSwap[i].comments.forEach((value) => {
+        if (value.author.includes(this.inputSearch) || value.text.includes(this.inputSearch)) {
+          this.searchedPost.push(tempPostSwap[i]);
+        }
+      })
+
     }
     this.tempPost = this.searchedPost;
   }
-  editText(currentPosts:[]){
+  editText(currentPosts: []) {
     console.log(currentPosts);
     // @ts-ignore
-    this.http.put(this.url + 'articles/' + currentPosts._id, {"text": <HTMLInputElement>document.getElementById(currentPosts._id+"editT").value}, { withCredentials: true}).subscribe(res => {
+    this.http.put(this.url + 'lastComment/' + currentPosts._id, { "text": <HTMLInputElement>document.getElementById(currentPosts._id + "editT").value }, { withCredentials: true }).subscribe(res => {
       this.pageData();
     })
 
   }
-  editComment(currentPosts:[]){
+  editComment(currentPosts: []) {
     // @ts-ignore
     console.log(currentPosts._id);
     // @ts-ignore
-    this.http.put(this.url + 'comment/' + currentPosts._id, {"text": <HTMLInputElement>document.getElementById(currentPosts._id+"editC").value}, { withCredentials: true}).subscribe(res => {
+    this.http.put(this.url + 'comment/' + currentPosts._id, { "text": <HTMLInputElement>document.getElementById(currentPosts._id + "editC").value }, { withCredentials: true }).subscribe(res => {
       this.pageData();
     })
     // window.location.reload();

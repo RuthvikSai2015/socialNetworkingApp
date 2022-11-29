@@ -15,7 +15,7 @@
   <div style="display:flex;height:36px">
     <input type="text" class="form-control" id="newPost" name="newPost" required [(ngModel)]="inputNewPost"
       placeholder="">&nbsp;&nbsp;
-    <input type="file" class="form-control" name="image" id="newImage" (change)="uploadImage()">
+    <input type="file" class="form-control" name="image" id="newImage" >
     <button type="submit" class="btn btn-primary" id="submit-newPost" value="Submit"
       (click)="newPost()">Post</button>&nbsp;&nbsp;
     <button type="submit" class="btn btn-primary" id="submit-clearPost" value="Submit" (click)="clearPost()">Clear Post</button>
@@ -56,7 +56,7 @@
                 </div>
 
                 <input class="form-control" type="text" id="{{currentPosts._id}}editT" name="editText" required
-                  placeholder="Edit Text">&nbsp;&nbsp;
+                  placeholder="Edit Comment">&nbsp;&nbsp;
                 <button type="submit" style="width:54%;font-size:10px" class="btn btn-primary" (click)="editText(currentPosts)" id="submit-comment"
                   value="Submit">Edit</button>
                 <input class="form-control" type="text" id="{{currentPosts._id}}editC" name="editComment" required

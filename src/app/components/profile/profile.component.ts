@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
+import { url } from '../../../environments/environment';
 
 @Component({
   selector: 'app-profile',
@@ -29,60 +30,70 @@ export class ProfileComponent implements OnInit {
   dateOfBirthDisplay: any;
   contactNumberDisplay: any;
   userNameDisplay: any;
-  userNameDisplay2:any;
+  userNameDisplay2: any;
   zipDisplay: any;
   img: File | undefined;
   imgUrl: string | undefined;
   successMessage: string | undefined;
   constructor(private http: HttpClient, private router: Router) {
+    this.url = url;
     this.nameCheck = "";
     this.emailCheck = "";
     this.birthCheck = "";
     this.zipCheck = "";
     this.phoneCheck = "";
     this.passwordCheck = "";
-    this.url = "";
     this.successMessage = "";
     this.userName = "";
     this.displayNameForm = "";
   }
-  ngOnInit(): void {
-    if (localStorage.getItem("userId")?.toString() != <string>"newUser") {
-      this.imgUrl = "https://m.media-amazon.com/images/I/71zIISn3b5S._SX425_.jpg";
-    }
-    this.userName = '';
-    // @ts-ignore
-    document.getElementById("userName").value = "";
-    this.userNameDisplay = localStorage.getItem('userName')?.toString();
-    this.userNameDisplay2 = localStorage.getItem('userName')?.toString();
-    if (<string>localStorage.getItem('dateOfBirth')) {
-      this.dateOfBirthDisplay = <string>localStorage.getItem('dateOfBirth');
-    } else {
-      this.dateOfBirthDisplay = "01-01-1990";
-    }
-    if (<string>localStorage.getItem(('phone'))) {
-      this.contactNumberDisplay = <string>localStorage.getItem('phone');
-    } else {
-      this.contactNumberDisplay = "123-123-1234";
-    }
-    if (<string>localStorage.getItem('zipCode')) {
-      this.zipDisplay = <string>localStorage.getItem('zipCode');
-    } else {
-      this.zipDisplay = "12345";
-    }
-    if (<string>localStorage?.getItem(('email'))) {
-      this.email = <string>localStorage?.getItem(('email'));
-    } else {
-      this.email = "sara@rice.edu";
-    }
-    if (<string>localStorage?.getItem(('displayName'))) {
-      this.displayNameForm = <string>localStorage.getItem('displayName');
-    } else {
-      this.displayNameForm = "sn62"
-    }
-    //  this.Password = <string>localStorage?.getItem(('password'));
+  async ngOnInit(): Promise<void> {
+    this.http.get(this.url + 'username/', { withCredentials: true }).subscribe(res => {
+      // @ts-ignore
+      this.userNameDisplay = res["username"];
+    })
+    this.http.get(this.url + 'email/', { withCredentials: true }).subscribe(res => {
+      // @ts-ignore
+      this.email = res["email"];
+    })
+    this.http.get(this.url + 'dob/', { withCredentials: true }).subscribe(res => {
+      // @ts-ignore
+      this.dateOfBirthDisplay = res["dob"];
+    })
+    this.http.get(this.url + 'zipcode/', { withCredentials: true }).subscribe(res => {
+      // @ts-ignore
+      this.zipDisplay = res["zipcode"];
+    })
+    this.http.get(this.url + 'phone/', { withCredentials: true }).subscribe(res => {
+      // @ts-ignore
+      this.contactNumberDisplay = res["phone"];
+    })
+    this.http.get(this.url + 'displayName/', { withCredentials: true }).subscribe(res => {
+      // @ts-ignore
+      this.displayNameForm = res["displayName"];
+    })
+    this.http.get(this.url + 'avatar/', { withCredentials: true }).subscribe(res => {
+      // @ts-ignore
+      this.imgUrl = res["avatar"];
+    })
   }
+  uploadImage() {
+    // @ts-ignore
+    let file = (<HTMLInputElement>document.getElementById("newImage")).files[0];
+    if (file) {
+      const fd = new FormData();
+      fd.append('image', file);
+      this.http.put(this.url + 'url', fd, { withCredentials: true }).subscribe(res => {
+        // @ts-ignore
+        this.imgUrl = res["url"];
+        this.http.put(this.url + 'avatar', { avatar: this.imgUrl }, { withCredentials: true }).subscribe(response => {
+          // @ts-ignore
+          this.imgUrl = response["avatar"];
+        })
 
+      })
+    }
+  }
   onSubmit() {
     this.router.navigate(['main']);
   }
@@ -170,50 +181,55 @@ export class ProfileComponent implements OnInit {
       this.zipCheck == "" &&
       this.phoneCheck == "" &&
       this.passwordCheck == "") {
-      this.successMessage = "User Details Updated Successfully!";
-      if (this.userName) {
-        localStorage.setItem('userName', <string>this.userName);
+
+      let data = {};
+      if (this.displayName != null) {
+        data = { "displayName": this.displayName }
+        this.http.put(this.url + 'displayName', data, { withCredentials: true }).subscribe(response => {
+          this.successMessage = "User Details Updated Successfully!";
+          // @ts-ignore
+          this.displayNameForm = response["displayName"];
+        })
       }
-      if (this.dateOfBirth && this.dateOfBirth != '') {
-        localStorage.setItem('dateOfBirth', <string>this.dateOfBirth);
+      if (this.emailId != null) {
+        data = { "email": this.emailId };
+        this.http.put(this.url + 'email', data, { withCredentials: true }).subscribe(response => {
+          this.successMessage = "User Details Updated Successfully!";
+          // @ts-ignore
+          this.email = response["email"];
+        })
       }
-      if (this.contactNumber && this.contactNumber != '') {
-        localStorage.setItem('phone', <string>this.contactNumber);
+      if (this.zipCode != null) {
+        data = { "zipcode": this.zipCode };
+        this.http.put(this.url + 'zipcode', data, { withCredentials: true }).subscribe(response => {
+          this.successMessage = "User Details Updated Successfully!";
+          // @ts-ignore
+          this.zipDisplay = response["zipcode"];
+        })
       }
-      if (this.zipCode) {
-        localStorage.setItem('zipCode', <string>this.zipCode);
+      if (this.dateOfBirth != null) {
+        data = { "dob": this.dateOfBirth };
+        this.http.put(this.url + 'dob', data, { withCredentials: true }).subscribe(response => {
+          this.successMessage = "User Details Updated Successfully!";
+          // @ts-ignore
+          this.dateOfBirthDisplay = response["dob"];
+        })
       }
-      localStorage.setItem('displayName', <string>this.displayName);
-      localStorage.setItem('password', <string>this.Password);
-      if (this.emailId && this.emailId != '') {
-        localStorage.setItem('email', <string>this.emailId);
+      if (this.contactNumber != null) {
+        data = { "phone": this.contactNumber };
+        this.http.put(this.url + 'phone', data, { withCredentials: true }).subscribe(response => {
+          this.successMessage = "User Details Updated Successfully!";
+          // @ts-ignore
+          this.contactNumberDisplay = response["phone"];
+        })
       }
-      // window.location.reload();
-      this.userNameDisplay = localStorage.getItem('userName')?.toString();
-      if (<string>localStorage.getItem('dateOfBirth')) {
-        this.dateOfBirthDisplay = <string>localStorage.getItem('dateOfBirth');
-      } else {
-        this.dateOfBirthDisplay = "01-01-1990";
-      }
-      if (<string>localStorage.getItem(('phone'))) {
-        this.contactNumberDisplay = <string>localStorage.getItem('phone');
-      } else {
-        this.contactNumberDisplay = "123-123-1234";
-      }
-      if (<string>localStorage.getItem('zipCode')) {
-        this.zipDisplay = <string>localStorage.getItem('zipCode');
-      } else {
-        this.zipDisplay = "12345";
-      }
-      if (<string>localStorage?.getItem(('email'))) {
-        this.email = <string>localStorage?.getItem(('email'));
-      } else {
-        this.email = "sara@rice.edu";
-      }
-      if (<string>localStorage?.getItem(('displayName'))) {
-        this.displayNameForm = <string>localStorage.getItem('displayName');
-      } else {
-        this.displayNameForm = "sn62"
+      if (this.Password != null && this.confirmPassword != null) {
+        data = { "password": this.Password };
+        this.http.put(this.url + 'password', data, { withCredentials: true }).subscribe(response => {
+          this.successMessage = "User Details Updated Successfully!";
+          // @ts-ignore
+          // this.contactNumberDisplay = response["phone"];
+        })
       }
     }
 
