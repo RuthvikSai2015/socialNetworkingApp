@@ -55,28 +55,28 @@ export class PostComponent implements OnInit {
     this.pageData();
 
   }
- pageData() {
-    
+  pageData() {
+
+    // @ts-ignore
+
+    this.http.get(this.url + 'articles/', { withCredentials: true }).subscribe(articleResponse => {
       // @ts-ignore
-   
-       this.http.get(this.url + 'articles/', { withCredentials: true }).subscribe(articleResponse => {
+      this.tempPost = articleResponse["posts"];
+      this.http.get(this.url + 'following', { withCredentials: true }).subscribe(followResponse => {
         // @ts-ignore
-        this.tempPost = articleResponse["posts"];
-        this.http.get(this.url + 'following', { withCredentials: true }).subscribe(followResponse => {
-          // @ts-ignore
-          let names = followResponse.followers;
-          //@ts-ignore
-          names.forEach((value) => {
-            this.http.get(this.url + 'articles/' + value, { withCredentials: true }).subscribe(followers => {
-              // @ts-ignore
-              followers[0]["articles"].forEach((records) => {
-                this.tempPost.push(records);
-              })
+        let names = followResponse.followers;
+        //@ts-ignore
+        names.forEach((value) => {
+          this.http.get(this.url + 'articles/' + value, { withCredentials: true }).subscribe(followers => {
+            // @ts-ignore
+            followers[0]["articles"].forEach((records) => {
+              this.tempPost.push(records);
             })
           })
         })
       })
-    
+    })
+
   }
   ngOnDestroy() {
     if (this.routerSubscription) {
@@ -111,7 +111,7 @@ export class PostComponent implements OnInit {
       })
     }
   }
-   newPost() {
+  newPost() {
     this.uploadImage();
     this.http.get(this.url + 'username', { withCredentials: true }).subscribe(res => {
       // @ts-ignore
@@ -168,9 +168,23 @@ export class PostComponent implements OnInit {
     this.tempPost = this.searchedPost;
   }
   editText(currentPosts: []) {
-    console.log(currentPosts);
     // @ts-ignore
-    this.http.put(this.url + 'lastComment/' + currentPosts._id, { "text": <HTMLInputElement>document.getElementById(currentPosts._id + "editT").value }, { withCredentials: true }).subscribe(res => {
+    var newText = <HTMLInputElement>document.getElementById(currentPosts._id + "editT").value;
+    // @ts-ignore
+    let comments = [];
+    // @ts-ignore
+    for (var i = 0; i < currentPosts.comments.length; i++) {
+      // @ts-ignore
+      if (i == currentPosts.comments.length - 1) {
+        // @ts-ignore
+        comments.push({ author: currentPosts.comments[i].author, text: newText, date: new Date() });
+      } else {
+        // @ts-ignore
+        comments.push({ author: currentPosts.comments[i].author, text: currentPosts.comments[i].text, date: currentPosts.comments[i].date });
+      }
+    }
+    // @ts-ignore
+    this.http.put(this.url + 'lastComment/' + currentPosts._id, { "comments": comments, }, { withCredentials: true }).subscribe(res => {
       this.pageData();
     })
 
