@@ -25,14 +25,14 @@ describe('PostComponent', () => {
   // });
   it('should fetch articles for current logged in user',async ()=>{
     let posts:number = component.tempPost.length;
-    await component.getArticles();
+    //await component.getArticles();
     let newposts:number = component.tempPost.length;
     expect(newposts).toBeGreaterThan(posts);
   });
 
   it('should filter displayed articles by the search keyword',async ()=>{
     //let posts:number = component.tempPost.length;
-    await component.getArticles();
+    //await component.getArticles();
     let newposts:number = component.tempPost.length;
     await component.searchFunction();
 

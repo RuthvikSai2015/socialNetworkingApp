@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { NavigationEnd, Router } from "@angular/router";
 import { Follower } from "../../../model/follower";
 import { lastValueFrom } from 'rxjs';
-import {url } from '../../../../environments/environment'
+import { url } from '../../../common/env';
 
 @Component({
   selector: 'app-follower',

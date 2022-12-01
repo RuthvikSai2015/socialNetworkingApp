@@ -99,48 +99,50 @@ export class PostComponent implements OnInit {
     }
     return userFirstName;
   }
-  uploadImage() {
+  async uploadImage() {
     // @ts-ignore
     let file = (<HTMLInputElement>document.getElementById("newImage")).files[0];
     if (file) {
       const fd = new FormData();
       fd.append('image', file);
-      this.http.put(this.url + 'url', fd, { withCredentials: true }).subscribe(res => {
+      await this.http.put(this.url + 'url', fd, { withCredentials: true }).subscribe(res => {
         // @ts-ignore
         this.imgUrl = res["url"];
       })
     }
   }
-  newPost() {
-    this.uploadImage();
-    this.http.get(this.url + 'username', { withCredentials: true }).subscribe(res => {
-      // @ts-ignore
-      var currUser = res["username"];
-      var data5 = {
-        "url": this.imgUrl,
-        "author": currUser,
-        "date": "12/27/2022:12:00:34",
-        "title": "new post",
-        "text": this.inputNewPost
-      }
-      this.http.post(this.url + 'article', data5, { withCredentials: true }).subscribe(res2 => {
+  async newPost() {
+    await this.uploadImage();
+    setTimeout(() => {
+      this.http.get(this.url + 'username', { withCredentials: true }).subscribe(res => {
         // @ts-ignore
-        var len = res2["articles"].length - 1;
-        data5 = {
+        var currUser = res["username"];
+        var data5 = {
           "url": this.imgUrl,
           "author": currUser,
           "date": "12/27/2022:12:00:34",
           "title": "new post",
-          "text": this.inputNewPost,
-          // @ts-ignore
-          "_id": res2["articles"][len]._id
+          "text": this.inputNewPost
         }
-        this.tempPost.unshift(data5);
-        this.addedPost.push(data5);
-        this.inputNewPost = "";
+        this.http.post(this.url + 'article', data5, { withCredentials: true }).subscribe(res2 => {
+          // @ts-ignore
+          var len = res2["articles"].length - 1;
+          data5 = {
+            "url": this.imgUrl,
+            "author": currUser,
+            "date": "12/27/2022:12:00:34",
+            "title": "new post",
+            "text": this.inputNewPost,
+            // @ts-ignore
+            "_id": res2["articles"][len]._id
+          }
+          this.tempPost.unshift(data5);
+          this.addedPost.push(data5);
+          this.inputNewPost = "";
+        })
+  
       })
-
-    })
+    }, 1000);
   }
 
   clearPost() {
