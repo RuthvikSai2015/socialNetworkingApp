@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
-import { url } from '../../../environments/environment';
+import { url } from '../../common/env';
 
 @Component({
   selector: 'app-profile',

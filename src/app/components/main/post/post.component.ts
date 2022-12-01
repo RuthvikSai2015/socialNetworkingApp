@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { NavigationEnd, Router } from "@angular/router";
 import { lastValueFrom } from 'rxjs';
-import { url } from '../../../../environments/environment'
+import { url } from '../../../common/env'
 
 @Component({
   selector: 'app-post',

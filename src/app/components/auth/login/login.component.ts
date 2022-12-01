@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { Router } from "@angular/router";
-import { url } from '../../../../environments/environment'
+import { url } from '../../../common/env';
 
 @Component({
   selector: 'app-login',
