@@ -114,9 +114,12 @@ export class FollowerComponent implements OnInit {
 
   }
   removeFollowers(name: string) {
-    this.http.delete(this.url + 'following/' + name, {withCredentials: true}).subscribe(res => {
+   this.http.delete(this.url + 'following/' + name, {withCredentials: true}).subscribe(res => {
     })
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+   
   }
 
 }
