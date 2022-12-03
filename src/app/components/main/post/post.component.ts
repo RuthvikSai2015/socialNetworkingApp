@@ -61,7 +61,27 @@ export class PostComponent implements OnInit {
 
     this.http.get(this.url + 'articles/', { withCredentials: true }).subscribe(articleResponse => {
       // @ts-ignore
-      this.tempPost = articleResponse["posts"];
+     // this.tempPost = articleResponse["posts"];
+       // @ts-ignore
+      articleResponse["posts"].forEach((datas)=>{
+        var comments;
+        //@ts-ignore
+        for (var i = 0; i < datas.comments.length; i++) {
+          comments = datas.comments[i].text;
+        }
+        var data =
+              {
+                "_id": datas._id,
+                "author": datas.author,
+                "text": datas.text,
+                "url":datas.url,
+                "date": datas.date,
+                "comments": datas.comments,
+                "lastComment": comments,
+                "__v": 0
+              }
+              this.tempPost.push(data);
+      })   
       this.http.get(this.url + 'following', { withCredentials: true }).subscribe(followResponse => {
         // @ts-ignore
         let names = followResponse.followers;
@@ -70,7 +90,22 @@ export class PostComponent implements OnInit {
           this.http.get(this.url + 'articles/' + value, { withCredentials: true }).subscribe(followers => {
             // @ts-ignore
             followers[0]["articles"].forEach((records) => {
-              this.tempPost.push(records);
+              var comments;
+              //@ts-ignore
+              for (var i = 0; i < records.comments.length; i++) {
+                comments = records.comments[i];
+              }
+              var data =
+              {
+                "_id": records._id,
+                "author": records.author,
+                "text": records.text,
+                "date": records.date,
+                "comments": records.comments,
+                "lastComment": comments,
+                "__v": 0
+              }
+              this.tempPost.push(data);
             })
           })
         })
@@ -140,7 +175,7 @@ export class PostComponent implements OnInit {
           this.addedPost.push(data5);
           this.inputNewPost = "";
         })
-  
+
       })
     }, 1000);
   }
@@ -187,7 +222,9 @@ export class PostComponent implements OnInit {
     }
     // @ts-ignore
     this.http.put(this.url + 'lastComment/' + currentPosts._id, { "comments": comments, }, { withCredentials: true }).subscribe(res => {
-      this.pageData();
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     })
 
   }

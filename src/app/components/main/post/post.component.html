@@ -43,13 +43,12 @@
                   <ul class="list-group list-group-flush">
 
                     <li class="list-group-item"><b>Author:</b> {{ currentPosts.author}}</li>
-                    <li class="list-group-item"><b>Title: </b>{{ currentPosts.title}}</li>
                     <li class="list-group-item"><b>Text: </b>{{ currentPosts.text }}</li>
                     <li class="list-group-item"><b>Timestamp:</b> {{ currentPosts.date}}</li>
-                    <li class="list-group-item"><b>Latest Comment: </b>nobis aliquid molestiae perspiciatis et ea nemo ab reprehenderit</li>
+                    <li class="list-group-item"><b>Latest Comment: </b>{{currentPosts.lastComment}}</li>
                     <li class="list-group-item"><b>All Comments:</b>
                       <div *ngFor="let comments of currentPosts.comments">
-                        <ul>{{comments.text}}<li>{{comments.email}}</li></ul>
+                        <ul><li>{{comments.text}}</li></ul>
                       </div>
                     </li>
                   </ul>
