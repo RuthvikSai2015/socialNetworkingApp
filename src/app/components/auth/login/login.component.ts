@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
   redirectRegister() {
     this.router.navigate(['register']);
   }
-  async onSubmit() {
+   onSubmit() {
     if (!this.userName) {
       this.nameValid = "Username cannot be empty";
       return;
@@ -50,37 +50,39 @@ export class LoginComponent implements OnInit {
     else
       this.passwordValid = "";
 
-      if (this.nameValid == "" && this.passwordValid == "") {
-
-        var  LoginForm = {
-          "username": this.userName,
-          "password": this.userPassword
-        }
-        localStorage.setItem("userLoginForm", JSON.stringify(LoginForm));
-        await this.http.post(this.url + 'login', LoginForm, { withCredentials: true}).subscribe(response => {
-          // @ts-ignore
-          if (response["result"] === "success") {
-            this.router.navigate(['main']);
-            this.loginFlag = true;
-            this.loginFailInfo = "";
-          }
-        })
-      }
- 
-      this.loginFailInfo = "The user does not exist! Please register and try again!";
-  }
-
-
-  async validateUser() {
-    let resp:boolean = false;
     if (this.nameValid == "" && this.passwordValid == "") {
 
-      var  LoginForm = {
+      var LoginForm = {
         "username": this.userName,
         "password": this.userPassword
       }
       localStorage.setItem("userLoginForm", JSON.stringify(LoginForm));
-      this.http.post(this.url + '/login', LoginForm, { withCredentials: true}).subscribe(response => {
+       this.http.post(this.url + 'login', LoginForm, { withCredentials: true }).subscribe(response => {
+        // @ts-ignore
+        if (response["result"] === "success") {
+          this.router.navigate(['main']);
+          this.loginFlag = true;
+          this.loginFailInfo = "";
+        }
+      })
+    }
+    setTimeout(() => {
+        this.loginFailInfo = "The user does not exist! Please register and try again!";
+    }, 500);
+
+  }
+
+
+  async validateUser() {
+    let resp: boolean = false;
+    if (this.nameValid == "" && this.passwordValid == "") {
+
+      var LoginForm = {
+        "username": this.userName,
+        "password": this.userPassword
+      }
+      localStorage.setItem("userLoginForm", JSON.stringify(LoginForm));
+      this.http.post(this.url + '/login', LoginForm, { withCredentials: true }).subscribe(response => {
         // @ts-ignore
         if (response["result"] === "success") {
           console.log("username match");
@@ -90,7 +92,7 @@ export class LoginComponent implements OnInit {
         }
       })
     }
-    console.log("Resp:",resp);
+    console.log("Resp:", resp);
     return resp;
   }
 }

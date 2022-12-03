@@ -61,54 +61,26 @@ export class PostComponent implements OnInit {
 
     this.http.get(this.url + 'articles/', { withCredentials: true }).subscribe(articleResponse => {
       // @ts-ignore
-     // this.tempPost = articleResponse["posts"];
-       // @ts-ignore
-      articleResponse["posts"].forEach((datas)=>{
+      // this.tempPost = articleResponse["posts"];
+      // @ts-ignore
+      articleResponse["posts"].forEach((datas) => {
         var comments;
         //@ts-ignore
         for (var i = 0; i < datas.comments.length; i++) {
           comments = datas.comments[i].text;
         }
         var data =
-              {
-                "_id": datas._id,
-                "author": datas.author,
-                "text": datas.text,
-                "url":datas.url,
-                "date": datas.date,
-                "comments": datas.comments,
-                "lastComment": comments,
-                "__v": 0
-              }
-              this.tempPost.push(data);
-      })   
-      this.http.get(this.url + 'following', { withCredentials: true }).subscribe(followResponse => {
-        // @ts-ignore
-        let names = followResponse.followers;
-        //@ts-ignore
-        names.forEach((value) => {
-          this.http.get(this.url + 'articles/' + value, { withCredentials: true }).subscribe(followers => {
-            // @ts-ignore
-            followers[0]["articles"].forEach((records) => {
-              var comments;
-              //@ts-ignore
-              for (var i = 0; i < records.comments.length; i++) {
-                comments = records.comments[i];
-              }
-              var data =
-              {
-                "_id": records._id,
-                "author": records.author,
-                "text": records.text,
-                "date": records.date,
-                "comments": records.comments,
-                "lastComment": comments,
-                "__v": 0
-              }
-              this.tempPost.push(data);
-            })
-          })
-        })
+        {
+          "_id": datas._id,
+          "author": datas.author,
+          "text": datas.text,
+          "url": datas.url,
+          "date": datas.date,
+          "comments": datas.comments,
+          "lastComment": comments,
+          "__v": 0
+        }
+        this.tempPost.push(data);
       })
     })
 
@@ -140,14 +112,17 @@ export class PostComponent implements OnInit {
     if (file) {
       const fd = new FormData();
       fd.append('image', file);
-      await this.http.put(this.url + 'url', fd, { withCredentials: true }).subscribe(res => {
+       this.http.put(this.url + 'url', fd, { withCredentials: true }).subscribe(res => {
         // @ts-ignore
         this.imgUrl = res["url"];
       })
     }
   }
   async newPost() {
-    await this.uploadImage();
+   // await this.uploadImage();
+   var date = new Date();
+   let current_date = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+ date.getDate();
+	 let current_time = date.getHours()+":"+date.getMinutes()+":"+ date.getSeconds();
     setTimeout(() => {
       this.http.get(this.url + 'username', { withCredentials: true }).subscribe(res => {
         // @ts-ignore
@@ -155,8 +130,7 @@ export class PostComponent implements OnInit {
         var data5 = {
           "url": this.imgUrl,
           "author": currUser,
-          "date": "12/27/2022:12:00:34",
-          "title": "new post",
+          "date": current_date +" "+current_time,
           "text": this.inputNewPost
         }
         this.http.post(this.url + 'article', data5, { withCredentials: true }).subscribe(res2 => {
@@ -165,8 +139,7 @@ export class PostComponent implements OnInit {
           data5 = {
             "url": this.imgUrl,
             "author": currUser,
-            "date": "12/27/2022:12:00:34",
-            "title": "new post",
+            "date": current_date +" "+current_time,
             "text": this.inputNewPost,
             // @ts-ignore
             "_id": res2["articles"][len]._id
@@ -177,7 +150,8 @@ export class PostComponent implements OnInit {
         })
 
       })
-    }, 1000);
+    }, 500);
+
   }
 
   clearPost() {
@@ -233,7 +207,9 @@ export class PostComponent implements OnInit {
     console.log(currentPosts._id);
     // @ts-ignore
     this.http.put(this.url + 'comment/' + currentPosts._id, { "text": <HTMLInputElement>document.getElementById(currentPosts._id + "editC").value }, { withCredentials: true }).subscribe(res => {
-      this.pageData();
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     })
     // window.location.reload();
   }
